@@ -1,13 +1,14 @@
-import { Schema, model, connect } from 'mongoose';
+import { connect } from 'mongoose';
 import { Webtoon } from '../../models/Webtoon';
 import dotenv from 'dotenv';
 
 dotenv.config();
 const dbURI = process.env.ATLAS_URI || '';
+const dbName = process.env.DB_NAME || 'error';
+const options = { dbName: dbName };
 
 export async function addWebtoon() {
-  // 4. Connect to MongoDB
-  await connect(dbURI, { dbName: 'sample' });
+  await connect(dbURI, options);
 
   const webtoon = new Webtoon({
     title: 'TS Test 4',
@@ -17,5 +18,5 @@ export async function addWebtoon() {
   });
   await webtoon.save();
 
-  console.log(webtoon.title);
+  console.log(webtoon);
 }

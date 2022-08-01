@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 // import './utils/connectDb';
 import { Webtoon } from './models/Webtoon';
-// import './sample';
+import { addWebtoon } from './controllers/webtoons/addWebtoon';
 import { Schema, model, connect } from 'mongoose';
 
 dotenv.config();
@@ -13,21 +13,9 @@ const PORT = process.env.PORT || 3000;
 const ATLAS_URI = process.env.ATLAS_URI;
 // const app: Express = express();
 
-run().catch((err) => console.log(err));
-
-async function run() {
-  // 4. Connect to MongoDB
-  await connect(`${ATLAS_URI}`, { dbName: 'sample' });
-
-  const webtoon = new Webtoon({
-    title: 'TS Test 2',
-    score: 'TS Test 2',
-    progress: 'TS Test 2',
-    tags: 'TS Test 2',
-  });
-  await webtoon.save();
-
-  console.log(webtoon.title);
+// Move this to an add webtoon route, once it exists
+async function addNewWebtoon() {
+  await addWebtoon().catch((err: string) => console.log(err));
 }
 
 // const PORT = process.env.PORT || 3000;

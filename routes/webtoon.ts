@@ -1,6 +1,6 @@
 import { connect, Schema, ObjectId, model } from 'mongoose';
 import express from 'express';
-// import { addWebtoon } from '../controllers/webtoons/addWebtoon';
+import { addWebtoon } from '../controllers/webtoons/addWebtoon';
 import { Webtoon } from '../models/Webtoon';
 import dotenv from 'dotenv';
 
@@ -59,29 +59,7 @@ webtoonRouter.route('/webtoon/add').post((req, res) => {
   let progress: any = req.query.progress;
   let tags: any = req.query.tags;
 
-  console.log(title);
-  async function addNewWebtoon(
-    res: any,
-    title: any,
-    score: any,
-    progress: any,
-    tags: any
-  ) {
-    await connect(dbURI, options);
-
-    const webtoon = new Webtoon({
-      title: `${title}`,
-      score: `${score}`,
-      progress: `${progress}`,
-      tags: `${tags}`,
-    });
-    await webtoon.save();
-    res.send('This will be how you add a webtoon');
-
-    console.log(webtoon);
-  }
-
-  addNewWebtoon(res, title, score, progress, tags);
+  addWebtoon(res, title, score, progress, tags);
 });
 
 // Update a webtoon by ID

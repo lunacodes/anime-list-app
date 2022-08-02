@@ -85,7 +85,34 @@ webtoonRouter.route('/webtoon/add').post((req, res) => {
 });
 
 // Update a webtoon by ID
-webtoonRouter.route('/webtoon/udpate/:id').post((req, res) => {});
+webtoonRouter.route('/webtoon/update/:id').post((req, res) => {
+  let id: any = req.params.id;
+
+  async function updateWebtoonById() {
+    await connect(dbURI, options);
+
+    const newValues = {
+      title: req.query.title,
+      score: req.query.score,
+      progress: req.query.progress,
+      tags: req.query.tags,
+    };
+
+    Webtoon.findByIdAndUpdate(id, newValues, (err: any, webtoon: any) => {
+      console.log(id);
+      console.log(`new values: \n${newValues}`);
+
+      if (err) {
+        console.log(err);
+      } else {
+        res.json(webtoon);
+        console.log(`Updated webtoon: ${webtoon}`);
+      }
+    });
+  }
+
+  updateWebtoonById();
+});
 
 // Delete a webtoon
 webtoonRouter.route('/:id').delete((req, res) => {

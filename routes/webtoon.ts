@@ -115,9 +115,21 @@ webtoonRouter.route('/webtoon/update/:id').post((req, res) => {
 });
 
 // Delete a webtoon
-webtoonRouter.route('/:id').delete((req, res) => {
-  res.send('This will be how you delete a webtoon');
-  // deleteWebtoonById(res, myId);
+webtoonRouter.route('/webtoon/delete/:id').delete((req, res) => {
+  let id: string = req.params.id;
+
+  async function deleteWebtoonById() {
+    Webtoon.findByIdAndDelete(id, (err: any, webtoon: any) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.json(webtoon);
+        console.log(`Deleted webtoon: ${webtoon}`);
+      }
+    });
+  }
+
+  deleteWebtoonById();
 });
 
 export default webtoonRouter;

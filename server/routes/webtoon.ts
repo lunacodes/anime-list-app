@@ -1,55 +1,29 @@
 import { connect, Schema, ObjectId, model } from 'mongoose';
 import express from 'express';
-import { addWebtoon } from '../controllers/webtoon';
+import {
+  addWebtoon,
+  deleteWebtoonById,
+  findWebtoonById,
+  listWebtoons,
+  updateWebtoonById,
+} from '../controllers/webtoon';
 import { Webtoon } from '../models/Webtoon';
 import dotenv from 'dotenv';
-
-dotenv.config();
-const PORT = process.env.PORT || 3000;
-const dbURI = process.env.ATLAS_URI || '';
-const dbName = process.env.DB_NAME || 'error';
-const options = { dbName: dbName };
-
-const app = express();
 
 const webtoonRouter = express.Router();
 webtoonRouter.use(express.json());
 
+// List All Webtoons
 webtoonRouter.route('/webtoon').get((req, res) => {
-  // res.send('This will be how you view webtoons');
-  // listWebtoons(res);
-
-  async function listWebtoons() {
-    await connect(dbURI, options);
-    Webtoon.find({}, (err: any, result: any) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.json(result);
-      }
-    });
-  }
-
-  listWebtoons();
+  listWebtoons(res);
 });
 
 // Find a single webtoon by ID
 webtoonRouter.route('/webtoon/:id').get((req, res) => {
   let id: any = req.params.id;
+  console.log(res);
 
-  async function findWebtoonById() {
-    await connect(dbURI, options);
-    Webtoon.findById(id, (err: any, result: any) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log(result);
-        res.json(result);
-      }
-    });
-  }
-
-  findWebtoonById();
+  findWebtoonById(res, id);
 });
 
 // Add a new webtoon
@@ -66,48 +40,14 @@ webtoonRouter.route('/webtoon/add').post((req, res) => {
 webtoonRouter.route('/webtoon/update/:id').post((req, res) => {
   let id: any = req.params.id;
 
-  async function updateWebtoonById() {
-    await connect(dbURI, options);
-
-    const newValues = {
-      title: req.query.title,
-      score: req.query.score,
-      progress: req.query.progress,
-      tags: req.query.tags,
-    };
-
-    Webtoon.findByIdAndUpdate(id, newValues, (err: any, webtoon: any) => {
-      console.log(id);
-      console.log(`new values: \n${newValues}`);
-
-      if (err) {
-        console.log(err);
-      } else {
-        res.json(webtoon);
-        console.log(`Updated webtoon: ${webtoon}`);
-      }
-    });
-  }
-
-  updateWebtoonById();
+  updateWebtoonById(res, id);
 });
 
 // Delete a webtoon
 webtoonRouter.route('/webtoon/delete/:id').delete((req, res) => {
-  let id: string = req.params.id;
+  let id: any = req.params.id;
 
-  async function deleteWebtoonById() {
-    Webtoon.findByIdAndDelete(id, (err: any, webtoon: any) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.json(webtoon);
-        console.log(`Deleted webtoon: ${webtoon}`);
-      }
-    });
-  }
-
-  deleteWebtoonById();
+  deleteWebtoonById(res, id);
 });
 
 export default webtoonRouter;

@@ -1,5 +1,5 @@
 import { connect } from 'mongoose';
-import { Webtoon } from '../../models/Webtoon';
+import { Webtoon } from '../models/Webtoon';
 import dotenv from 'dotenv';
 
 dotenv.config();

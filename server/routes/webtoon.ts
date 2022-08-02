@@ -1,6 +1,6 @@
 import { connect, Schema, ObjectId, model } from 'mongoose';
 import express from 'express';
-import { addWebtoon } from '../controllers/webtoons/addWebtoon';
+import { addWebtoon } from '../controllers/webtoon';
 import { Webtoon } from '../models/Webtoon';
 import dotenv from 'dotenv';
 

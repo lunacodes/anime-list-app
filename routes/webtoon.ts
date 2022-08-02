@@ -16,8 +16,21 @@ const webtoonRouter = express.Router();
 webtoonRouter.use(express.json());
 
 webtoonRouter.route('/webtoon').get((req, res) => {
-  res.send('This will be how you view webtoons');
+  // res.send('This will be how you view webtoons');
   // listWebtoons(res);
+
+  async function listWebtoons() {
+    await connect(dbURI, options);
+    Webtoon.find({}, (err: any, result: any) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.json(result);
+      }
+    });
+  }
+
+  listWebtoons();
 });
 
 webtoonRouter.route('/webtoon/:id').get((req, res) => {
@@ -26,10 +39,6 @@ webtoonRouter.route('/webtoon/:id').get((req, res) => {
 });
 
 webtoonRouter.route('/webtoon/add').post((req, res) => {
-  // console.log(res);
-  console.log(req.query);
-  // console.log(req.query.title);
-
   let title: any = req.query.title;
   let score: any = req.query.score;
   let progress: any = req.query.progress;

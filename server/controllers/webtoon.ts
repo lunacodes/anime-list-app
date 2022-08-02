@@ -7,6 +7,7 @@ const dbURI = process.env.ATLAS_URI || '';
 const dbName = process.env.DB_NAME || 'error';
 const options = { dbName: dbName };
 
+// Add Webtoon
 export async function addWebtoon(
   res: any,
   title: any,
@@ -28,6 +29,7 @@ export async function addWebtoon(
   res.json(webtoon);
 }
 
+// Delete Webtoon
 export async function deleteWebtoonById(res: any, id: Types.ObjectId) {
   Webtoon.findByIdAndDelete(id, (err: any, webtoon: any) => {
     if (err) {
@@ -39,6 +41,7 @@ export async function deleteWebtoonById(res: any, id: Types.ObjectId) {
   });
 }
 
+// Find Webtoon
 export async function findWebtoonById(res: any, id: Types.ObjectId) {
   await connect(dbURI, options);
   Webtoon.findById(id, (err: any, result: any) => {
@@ -51,6 +54,7 @@ export async function findWebtoonById(res: any, id: Types.ObjectId) {
   });
 }
 
+// List All Webtoons
 export async function listWebtoons(res: any) {
   await connect(dbURI, options);
   Webtoon.find({}, (err: any, result: any) => {
@@ -63,6 +67,7 @@ export async function listWebtoons(res: any) {
   });
 }
 
+// Update Webtoon
 export async function updateWebtoonById(res: any, id: Types.ObjectId) {
   await connect(dbURI, options);
 

@@ -1,4 +1,4 @@
-import { connect } from 'mongoose';
+import { connect, Schema, ObjectId, model } from 'mongoose';
 import express from 'express';
 // import { addWebtoon } from '../controllers/webtoons/addWebtoon';
 import { Webtoon } from '../models/Webtoon';
@@ -33,11 +33,26 @@ webtoonRouter.route('/webtoon').get((req, res) => {
   listWebtoons();
 });
 
+// Find a single webtoon by ID
 webtoonRouter.route('/webtoon/:id').get((req, res) => {
-  res.send('This will be how you view a specific webtoon');
-  // findWebtoonById(res, myQuery);
+  let id: any = req.params.id;
+
+  async function findWebtoonById() {
+    await connect(dbURI, options);
+    Webtoon.findById(id, (err: any, result: any) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(result);
+        res.json(result);
+      }
+    });
+  }
+
+  findWebtoonById();
 });
 
+// Add a new webtoon
 webtoonRouter.route('/webtoon/add').post((req, res) => {
   let title: any = req.query.title;
   let score: any = req.query.score;
@@ -69,11 +84,10 @@ webtoonRouter.route('/webtoon/add').post((req, res) => {
   addNewWebtoon(res, title, score, progress, tags);
 });
 
-webtoonRouter.route('/webtoon/udpate/:id').post((req, res) => {
-  res.send('This will be how you update a webtoon');
-  // updateWebtoonById(res, myId, newValues);
-});
+// Update a webtoon by ID
+webtoonRouter.route('/webtoon/udpate/:id').post((req, res) => {});
 
+// Delete a webtoon
 webtoonRouter.route('/:id').delete((req, res) => {
   res.send('This will be how you delete a webtoon');
   // deleteWebtoonById(res, myId);

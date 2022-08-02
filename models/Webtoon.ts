@@ -1,4 +1,4 @@
-import { model, Schema, Document } from 'mongoose';
+import { model, Schema } from 'mongoose';
 
 // 1. Create an interface representing a document in MongoDB.
 export interface IWebtoon {

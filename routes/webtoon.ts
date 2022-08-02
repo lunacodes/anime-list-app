@@ -1,7 +1,19 @@
+import { connect } from 'mongoose';
 import express from 'express';
-import { addWebtoon } from '../controllers/webtoons/addWebtoon';
+// import { addWebtoon } from '../controllers/webtoons/addWebtoon';
+import { Webtoon } from '../models/Webtoon';
+import dotenv from 'dotenv';
+
+dotenv.config();
+const PORT = process.env.PORT || 3000;
+const dbURI = process.env.ATLAS_URI || '';
+const dbName = process.env.DB_NAME || 'error';
+const options = { dbName: dbName };
+
+const app = express();
 
 const webtoonRouter = express.Router();
+webtoonRouter.use(express.json());
 
 webtoonRouter.route('/webtoon').get((req, res) => {
   res.send('This will be how you view webtoons');
@@ -14,20 +26,35 @@ webtoonRouter.route('/webtoon/:id').get((req, res) => {
 });
 
 webtoonRouter.route('/webtoon/add').post((req, res) => {
-  res.send('This will be how you add a webtoon');
-  let title: string = 'req.body.title';
-  let score: string = 'req.body.score';
-  let progress: string = 'req.body.progress';
-  let tags: string = 'req.body.tags';
+  // console.log(res);
+  console.log(req.query);
+  // console.log(req.query.title);
 
+  let title: any = req.query.title;
+  let score: any = req.query.score;
+  let progress: any = req.query.progress;
+  let tags: any = req.query.tags;
+
+  console.log(title);
   async function addNewWebtoon(
     res: any,
-    title: string,
-    score: string,
-    progress: string,
-    tags: string
+    title: any,
+    score: any,
+    progress: any,
+    tags: any
   ) {
-    await addWebtoon().catch((err: string) => console.log(err));
+    await connect(dbURI, options);
+
+    const webtoon = new Webtoon({
+      title: `${title}`,
+      score: `${score}`,
+      progress: `${progress}`,
+      tags: `${tags}`,
+    });
+    await webtoon.save();
+    res.send('This will be how you add a webtoon');
+
+    console.log(webtoon);
   }
 
   addNewWebtoon(res, title, score, progress, tags);

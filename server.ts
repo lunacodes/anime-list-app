@@ -1,7 +1,8 @@
 import express, { Express, Request, Response } from 'express';
+import path from 'path';
 import dotenv from 'dotenv';
 import { Webtoon } from './models/Webtoon';
-import { Schema, model, connect } from 'mongoose';
+// import { connect } from 'mongoose';
 
 // Routes
 import home from './routes/home';

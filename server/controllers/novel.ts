@@ -1,5 +1,5 @@
 import { connect, Types } from 'mongoose';
-import { Webtoon } from '../models/Webtoon';
+import { Novel } from '../models/Novel';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -7,8 +7,8 @@ const dbURI = process.env.ATLAS_URI || '';
 const dbName = process.env.DB_NAME || 'error';
 const options = { dbName: dbName };
 
-// Add Webtoon
-export async function addWebtoon(
+// Add Novel
+export async function addNovel(
   res: any,
   title: any,
   score: any,
@@ -17,34 +17,34 @@ export async function addWebtoon(
 ) {
   await connect(dbURI, options);
 
-  const webtoon = new Webtoon({
+  const novel = new Novel({
     title: title,
     score: score,
     progress: progress,
     tags: tags,
   });
-  await webtoon.save();
+  await novel.save();
 
-  console.log('Webtoon was added:\n', webtoon);
-  res.json(webtoon);
+  console.log('Novel was added:\n', novel);
+  res.json(novel);
 }
 
-// Delete Webtoon
-export async function deleteWebtoonById(res: any, id: Types.ObjectId) {
-  Webtoon.findByIdAndDelete(id, (err: any, webtoon: any) => {
+// Delete Novel
+export async function deleteNovelById(res: any, id: Types.ObjectId) {
+  Novel.findByIdAndDelete(id, (err: any, novel: any) => {
     if (err) {
       console.log(err);
     } else {
-      res.json(webtoon);
-      console.log(`Deleted webtoon: ${webtoon}`);
+      res.json(novel);
+      console.log(`Deleted novel: ${novel}`);
     }
   });
 }
 
-// Find Webtoon
-export async function findWebtoonById(res: any, id: Types.ObjectId) {
+// Find Novel
+export async function findNovelById(res: any, id: Types.ObjectId) {
   await connect(dbURI, options);
-  Webtoon.findById(id, (err: any, result: any) => {
+  Novel.findById(id, (err: any, result: any) => {
     if (err) {
       console.log(err);
     } else {
@@ -54,21 +54,21 @@ export async function findWebtoonById(res: any, id: Types.ObjectId) {
   });
 }
 
-// List All Webtoons
-export async function listWebtoons(res: any) {
+// List All Novels
+export async function listNovels(res: any) {
   await connect(dbURI, options);
-  Webtoon.find({}, (err: any, result: any) => {
+  Novel.find({}, (err: any, result: any) => {
     if (err) {
       console.log(err);
     } else {
-      console.log('displayed webtoons');
+      console.log('displayed novels');
       res.json(result);
     }
   });
 }
 
-// Update Webtoon
-export async function updateWebtoonById(res: any, id: Types.ObjectId) {
+// Update Novel
+export async function updateNovelById(res: any, id: Types.ObjectId) {
   await connect(dbURI, options);
 
   const newValues = {
@@ -78,15 +78,15 @@ export async function updateWebtoonById(res: any, id: Types.ObjectId) {
     tags: res.query.tags,
   };
 
-  Webtoon.findByIdAndUpdate(id, newValues, (err: any, webtoon: any) => {
+  Novel.findByIdAndUpdate(id, newValues, (err: any, novel: any) => {
     console.log(id);
     console.log(`new values: \n${newValues}`);
 
     if (err) {
       console.log(err);
     } else {
-      res.json(webtoon);
-      console.log(`Updated webtoon: ${webtoon}`);
+      res.json(novel);
+      console.log(`Updated novel: ${novel}`);
     }
   });
 }

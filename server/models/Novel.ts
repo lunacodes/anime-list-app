@@ -1,7 +1,7 @@
 import { model, Schema } from 'mongoose';
 
 // 1. Create an interface representing a document in MongoDB.
-export interface IWebtoon {
+export interface INovel {
   title?: string;
   score?: number;
   progress?: string;
@@ -9,7 +9,7 @@ export interface IWebtoon {
 }
 
 // 2. Create a Schema corresponding to the document interface.
-const webtoonSchema = new Schema<IWebtoon>({
+const novelSchema = new Schema<INovel>({
   title: { type: String, required: true },
   score: { type: Number, required: true },
   progress: { type: String, required: true },
@@ -17,4 +17,4 @@ const webtoonSchema = new Schema<IWebtoon>({
 });
 
 // 3. Create a Model.
-export const Webtoon = model<IWebtoon>('Webtoon', webtoonSchema);
+export const Novel = model<INovel>('Novel', novelSchema);

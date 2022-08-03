@@ -1,13 +1,13 @@
 import express, { Express, Request, Response } from 'express';
 import path from 'path';
 import dotenv from 'dotenv';
-import { Webtoon } from './models/Webtoon';
+import { Novel } from './models/Novel';
 import { User } from './models/User';
 // import { connect } from 'mongoose';
 
 // Routes
 import home from './routes/home';
-import webtoonRouter from './routes/webtoon';
+import novelRouter from './routes/novel';
 import userRouter from './routes/user';
 
 // Environment Variables
@@ -19,7 +19,7 @@ const app: Express = express();
 // Express App Setup
 app.use(express.json());
 app.use('/', home);
-app.use(webtoonRouter);
+app.use(novelRouter);
 app.use(userRouter);
 
 // Run the server

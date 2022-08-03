@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 const dbURI = process.env.ATLAS_URI || '';
-const dbName = process.env.DB_NAME || 'webtoons';
+const dbName = process.env.DB_NAME || 'novels';
 const options = { dbName: dbName };
 
 // Add User

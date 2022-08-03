@@ -1,0 +1,33 @@
+.App-header {
+  align-items: center;
+  background-color: #282c34;
+  color: white;
+  display: flex;
+  flex-flow: row nowrap;
+  font-size: 20px;
+  justify-content: space-between;
+
+  a {
+    text-decoration: none;
+  }
+}
+
+.site-nav {
+  align-items: center;
+  color: white;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+
+.nav-links {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  list-style: none;
+}
+
+.nav-item {
+  margin: 0 14px;
+}

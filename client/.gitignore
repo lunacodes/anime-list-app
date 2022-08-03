@@ -21,3 +21,8 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# React default testing and readme for now
+App.test.tsx
+setupTests.ts
+README.md

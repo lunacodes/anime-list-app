@@ -24,3 +24,5 @@ The current tech stack for this app is as follows:
 - Add user authentication
 - Refine typing
 - Write tests
+- Allow `/fetch` route to handle query params from client
+- Stop `getNovelsRequest()` novels fetch from running twice

@@ -12,8 +12,10 @@ const navigation = {
   ],
 };
 
-function App() {
+const App: React.FC = () => {
   const { brand, links } = navigation;
+  // eslint-disable-next-line  @typescript-eslint/no-unused-vars
+
   return (
     <div className='App'>
       <header className='App-header'>
@@ -24,6 +26,6 @@ function App() {
       </main>
     </div>
   );
-}
+};
 
 export default App;

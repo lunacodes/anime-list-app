@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.scss';
 import Navbar from './components/Navbar';
-import Gallery from './components/Gallery';
+import Main from './Main';
 
 const navigation = {
   brand: { name: 'My Light Novels', to: '/' },
@@ -20,7 +20,7 @@ function App() {
         <Navbar brand={brand} links={links} />
       </header>
       <main id='site-main' className='site-main'>
-        <Gallery />
+        <Main />
       </main>
     </div>
   );

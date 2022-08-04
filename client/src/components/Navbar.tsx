@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 
 const Navbar = (props: {
   brand: { name: string; to: string };
@@ -7,12 +8,11 @@ const Navbar = (props: {
   // destructure to avoid props.brand.to
   const { brand, links } = props;
 
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   const NavLinks: any = () =>
     links.map((link: { name: string; to: string }) => (
       <li className='nav-item' key={link.name}>
-        <a className='nav-link' href={link.to}>
-          {link.name}
-        </a>
+        <Link to={link.to}>{link.name}</Link>
       </li>
     ));
 

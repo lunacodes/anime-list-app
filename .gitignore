@@ -1,6 +1,6 @@
-node_modules
+_archive
+*.bak*
 *.code-workspace
 *.env
 dist/
-_archive
-*.bak*
+node_modules

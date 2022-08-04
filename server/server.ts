@@ -1,9 +1,5 @@
-import express, { Express, Request, Response } from 'express';
-import path from 'path';
+import express, { Express } from 'express';
 import dotenv from 'dotenv';
-import { Novel } from './models/Novel';
-import { User } from './models/User';
-import { connect } from 'mongoose';
 import cors from 'cors';
 
 // Routes
@@ -13,12 +9,11 @@ import userRouter from './routes/user';
 
 // Environment Variables
 dotenv.config();
-const ATLAS_URI = process.env.ATLAS_URI;
 const PORT = process.env.PORT || 3001;
 
 // Express App Setup
 const app: Express = express();
-const allowedOrigins = ['http://localhost:3000'];
+const allowedOrigins = process.env.ALLOWED_ORIGINS;
 const options: cors.CorsOptions = {
   origin: allowedOrigins,
 };

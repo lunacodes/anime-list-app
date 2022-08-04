@@ -2,7 +2,9 @@ import express from 'express';
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  res.send('<h1>Hello from the TypeScript world!</h1>');
+  res.send(
+    '<h1>Nothing to see here</h1><p>Try making a call to one of the novel or user routes</p>'
+  );
 });
 
 export default router;

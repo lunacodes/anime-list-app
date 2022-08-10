@@ -1,27 +1,29 @@
 # My Light Novel App
 
-This app is an in-progress exercise, in order for me to further my React, Typescript, and Node knowledge. I had previously been working on a [webtoons version](https://github.com/lunacodes/my-webtoon-list-app), but decided to start over from a clean slate.
+This app is an in-progress exercise, in order for me to further my React, Typescript, and Node knowledge.
 
-Demo version coming soon.
+Demo: [My Light Novels (Heroku App)](https://my-light-novels.herokuapp.com/)
 
-To run the app locally:
+## Running the App
 
-1. Run `npm run setup` from the root directory
-2. Run `npm start` from the root directory
+You'll need to have a MongoDB and Atlas URI set up. See [MongoDB - MERN Stack Tutorial](https://www.mongodb.com/languages/mern-stack-tutorial) and [MongoDB - Get Started With Atlas](https://docs.atlas.mongodb.com/getting-started/)
 
-To do this manually:
+**Running the App**
 
-1. Run `npm install` in the root directory, then `npm run dev` (or `npm run startServer`). The server will now be running on localhost:3001
-2. In a separate terminal window, `cd client`, `npm install`, `npm start`. The app will now be running on localhost:3000
+1. Rename `.env.sample` to `.env`
+2. Fill in your `ATLAS_URI` in `.env` (you can get this via MongoDB's website)
+3. Run `npm run setup` then `npm run dev` from the root directory.
+4. In a 2nd terminal window, `cd client` then `npm start`. Alternately, you can combine steps 3 & 4 by running `npm run startLocal` instead of `npm run dev`
+
+**Building the App**
+
+In the root directory, `npm run build` then `npm start`
 
 ## Tech Stack
 
 The current tech stack for this app is as follows:
 
-- NodeJs
-- React
-- Express
-- MongoDB
+- MERN Stack (MongoDB, Express, React, NodeJs)
 - Mongoose
 - Typescript
 - [Kitsu API](https://kitsu.docs.apiary.io/)
@@ -39,7 +41,6 @@ The current tech stack for this app is as follows:
 
 ### Server
 
-- Add search functionality
-- Refine typing
+- Add search functionality to `/fetch` route
+- Improve typing
 - Write tests
-- Allow `/fetch` route to handle query params from client

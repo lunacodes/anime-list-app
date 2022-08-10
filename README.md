@@ -13,7 +13,7 @@ The current tech stack for this app is as follows:
 - Express
 - MongoDB
 - Typescript
-- [Kitsu API](https://kitsu.docs.apiary.io/) (to be implemented)
+- [Kitsu API](https://kitsu.docs.apiary.io/)
 
 ## To-Do
 
@@ -26,3 +26,4 @@ The current tech stack for this app is as follows:
 - Write tests
 - Allow `/fetch` route to handle query params from client
 - Stop `getNovelsRequest()` novels fetch from running twice
+- eslint: props validation

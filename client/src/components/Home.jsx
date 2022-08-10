@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Gallery from './Gallery';
 import axios from 'axios';
 
-const Home: React.FC = () => {
-  // eslint-disable-next-line  @typescript-eslint/no-unused-vars
-  const [novels, setNovels] = useState([] as unknown);
+const Home = () => {
+  const [novels, setNovels] = useState([]);
 
   const getNovelsRequest = async () => {
     const options = {
@@ -16,9 +15,7 @@ const Home: React.FC = () => {
     };
 
     axios.request(options).then((response) => {
-      console.log(response);
-      const data = response.data;
-      console.log(data);
+      const data = response.data.data;
 
       setNovels(data);
     });
@@ -28,7 +25,7 @@ const Home: React.FC = () => {
     getNovelsRequest();
   }, []);
 
-  return <Gallery />;
+  return <Gallery novels={novels} />;
 };
 
 export default Home;

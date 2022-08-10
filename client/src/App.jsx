@@ -12,9 +12,8 @@ const navigation = {
   ],
 };
 
-const App: React.FC = () => {
+const App = () => {
   const { brand, links } = navigation;
-  // eslint-disable-next-line  @typescript-eslint/no-unused-vars
 
   return (
     <div className='App'>

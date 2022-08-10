@@ -5,7 +5,6 @@ const Gallery = (props) => {
 
   const NovelsDisplay = () =>
     novel_data.map((item) => {
-      console.log(item);
       const id = item.id;
       const title = item.title;
       const poster = item.poster;

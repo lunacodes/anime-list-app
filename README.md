@@ -17,13 +17,18 @@ The current tech stack for this app is as follows:
 
 ## To-Do
 
-- Implement calls to Kitsu API to populate front page
-- Connect front-end routes to back-end, via Axios
+### Client
+
+- Generate dynamic pgs for each novel
 - Add search functionality
 - Create User Profile area
 - Add user authentication
+- Write tests
+- eslint: props validation
+
+### Server
+
+- Add search functionality
 - Refine typing
 - Write tests
 - Allow `/fetch` route to handle query params from client
-- Stop `getNovelsRequest()` novels fetch from running twice
-- eslint: props validation

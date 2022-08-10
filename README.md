@@ -4,6 +4,16 @@ This app is an in-progress exercise, in order for me to further my React, Typesc
 
 Demo version coming soon.
 
+To run the app locally:
+
+1. Run `npm run setup` from the root directory
+2. Run `npm start` from the root directory
+
+To do this manually:
+
+1. Run `npm install` in the root directory, then `npm run dev` (or `npm run startServer`). The server will now be running on localhost:3001
+2. In a separate terminal window, `cd client`, `npm install`, `npm start`. The app will now be running on localhost:3000
+
 ## Tech Stack
 
 The current tech stack for this app is as follows:
@@ -12,6 +22,7 @@ The current tech stack for this app is as follows:
 - React
 - Express
 - MongoDB
+- Mongoose
 - Typescript
 - [Kitsu API](https://kitsu.docs.apiary.io/)
 

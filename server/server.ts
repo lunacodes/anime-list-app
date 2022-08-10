@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 3001;
 
 // Express App Setup
 const app: Express = express();
-const allowedOrigins = process.env.ALLOWED_ORIGINS;
+const allowedOrigins = process.env.ALLOWED_ORIGINS || '*';
 const options: cors.CorsOptions = {
   origin: allowedOrigins,
 };

@@ -1,15 +1,14 @@
 {
-  "name": "ts",
+  "name": "light-novel-ts",
+  "engines": {
+    "node": "16.x"
+  },
   "version": "1.0.0",
   "description": "",
   "main": "server/server.js",
   "scripts": {
-    "build": "npx tsc",
-    "heroku-post-build": "cd client && npm install && npm run build",
-    "setup": "npm install && cd client && npm install && cd ../",
-    "start": "node server/dist/server.js",
-    "start2": "npm run setup && npm run startApp",
-    "startApp": "concurrently \"nodemon -q server/dist/server.js\" \"cd client && npm start\"",
+    "build": "cd client && npm install && npm run build",
+    "start": "npx tsc && node server/dist/server.js",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q server/dist/server.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

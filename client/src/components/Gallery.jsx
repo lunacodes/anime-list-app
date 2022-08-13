@@ -4,13 +4,13 @@ const Gallery = (props) => {
   const novel_data = props.novels;
 
   const NovelsDisplay = () =>
-    novel_data.map((item) => {
-      const id = item.id;
+    novel_data.map((item, index) => {
+      const id = `${index}-${item.title}`;
       const title = item.title;
       const poster = item.poster;
 
       return (
-        <div key={id} className='gallery-item' id={`gal-item-${id}`}>
+        <div key={id} className='gallery-item'>
           <img
             src={poster}
             alt={title}

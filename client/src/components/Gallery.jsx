@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 const Gallery = (props) => {
-  const novel_data = props.novels;
+  const novel_data = props.novels[0];
 
   const NovelsDisplay = () =>
     novel_data.map((item, index) => {

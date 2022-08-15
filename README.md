@@ -38,6 +38,7 @@ The current tech stack for this app is as follows:
 - Add user authentication
 - Write tests
 - eslint: props validation
+- getNovelsRequest - n_dat - data.id is undefined
 
 ### Server
 

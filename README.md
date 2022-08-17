@@ -25,23 +25,21 @@ The current tech stack for this app is as follows:
 
 - MERN Stack (MongoDB, Express, React, NodeJs)
 - Mongoose
-- Typescript
 - [Kitsu API](https://kitsu.docs.apiary.io/)
 
 ## To-Do
 
 ### Client
 
-- Generate dynamic pgs for each novel
 - Add search functionality
 - Create User Profile area
 - Add user authentication
 - Write tests
 - eslint: props validation
-- getNovelsRequest - n_dat - data.id is undefined
 
 ### Server
 
 - Add search functionality to `/fetch` route
-- Improve typing
 - Write tests
+- Rewrite in TypeScript
+- Add User Authentication via localStorage or JWT

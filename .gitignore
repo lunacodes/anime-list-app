@@ -2,5 +2,6 @@ _archive
 *.bak*
 *.code-workspace
 *.env
+*.sublime*
 dist/
 node_modules

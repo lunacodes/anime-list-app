@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 const Profile = () => {
   return <p>This will be the Profile page</p>;

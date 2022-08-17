@@ -4,7 +4,6 @@
     "es2021": true
   },
   "extends": ["eslint:recommended", "plugin:react/recommended"],
-  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -14,7 +13,7 @@
   },
   "plugins": ["react"],
   "rules": {
-    "react/prop-types": "off",
-    "no-unused-vars": "off"
+    "no-unused-vars": "off",
+    "react/prop-types": "off"
   }
 }

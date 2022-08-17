@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 const Gallery = (props) => {
   const novel_data = props.novels[0];

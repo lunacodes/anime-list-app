@@ -13,5 +13,4 @@ const userSchema = new Schema(
 	{ collection: 'users' }
 );
 
-// 3. Create a Model.
 export const User = model('User', userSchema);

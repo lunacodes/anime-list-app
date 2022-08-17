@@ -1,6 +1,7 @@
-import connect from 'mongoose';
+import mongoose from 'mongoose';
 import { User } from '../models/User.js';
 import dotenv from 'dotenv';
+const { connect } = mongoose;
 
 dotenv.config();
 const dbURI = process.env.ATLAS_URI || '';

@@ -12,5 +12,4 @@ const novelSchema = new Schema(
 	{ collection: 'users' }
 );
 
-// 3. Create a Model.
 export const Novel = model('Novel', novelSchema);

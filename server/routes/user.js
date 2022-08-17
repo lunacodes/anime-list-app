@@ -19,7 +19,7 @@ userRouter.route('/register').post((req, res) => {
 	const password = req.query.password;
 	const email = req.query.email;
 
-	addUser(res, firstName, lastName, username, email);
+	addUser(res, firstName, lastName, username, password, email);
 });
 
 // Delete a user

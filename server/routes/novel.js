@@ -45,7 +45,7 @@ novelRouter.route('/fetch').get((req, res) => {
 			return res.json();
 		})
 		.then((user) => {
-			console.log(user);
+			// console.log(user);
 			res.json(user);
 		})
 		.catch((err) => {

@@ -3,10 +3,14 @@ import Gallery from './Gallery';
 import getNovelsRequest from '../services/getNovelsRequest.js';
 
 const Home = (props) => {
-  const novel_data = props;
-  const novels = Object.values(novel_data);
+  const novel_data = props.novels;
+  const novels_arr = [];
 
-  return <Gallery novels={novels} />;
+  novel_data.map((novel) => {
+    novels_arr.push(Object.values(novel));
+  });
+
+  return <Gallery novels={novel_data} />;
 };
 
 export default Home;

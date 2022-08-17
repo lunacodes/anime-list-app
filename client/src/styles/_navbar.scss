@@ -1,6 +1,6 @@
 .App-header {
   align-items: center;
-  background-color: #282c34;
+  background-color: $background-accent;
   color: white;
   display: flex;
   flex-flow: row nowrap;
@@ -8,7 +8,14 @@
   justify-content: space-between;
 
   a {
+    color: $nav-link-color;
     text-decoration: none;
+
+    &:active,
+    &:hover,
+    &:visited {
+      color: $nav-link-color;
+    }
   }
 }
 

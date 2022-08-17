@@ -1,8 +1,6 @@
-@use 'styles/_structure';
-@use 'styles/_navbar';
-@use 'styles/_typography';
-@use 'styles/_gallery';
-
-// @tailwind base;
-// @tailwind components;
-// @tailwind utilities;
+@import 'styles/_colors';
+@import 'styles/_structure';
+@import 'styles/_navbar';
+@import 'styles/_typography';
+@import 'styles/_gallery';
+@import 'styles/_novel';

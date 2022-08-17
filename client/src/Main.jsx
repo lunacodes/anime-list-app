@@ -6,7 +6,6 @@ import Logout from './components/Logout';
 import NovelPage from './components/NovelPage';
 import getNovelsRequest from './services/getNovelsRequest.js';
 import stringToSlug from './services/stringToSlug.js';
-// import GeneratedRoutes from './components/Routes';
 
 const Main = () => {
   const [novelsData, setNovelsData] = useState();
@@ -23,8 +22,6 @@ const Main = () => {
     }
     fetchNovelData();
   }, []);
-
-  const slugPaths = [{ id: 1, path: 'test' }];
 
   return (
     <>

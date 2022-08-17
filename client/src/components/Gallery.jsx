@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import stringToSlug from '../services/stringToSlug.js';
 import { Link } from 'react-router-dom';
 
-const Gallery = (props) => {
-  const novel_data = props.novels;
+const Gallery = ({ novels }) => {
+  const novel_data = novels;
 
   const NovelsDisplay = () =>
     novel_data.map((item, index) => {
@@ -33,6 +34,10 @@ const Gallery = (props) => {
       <NovelsDisplay />
     </div>
   );
+};
+
+Gallery.propTypes = {
+  novels: PropTypes.array,
 };
 
 export default Gallery;

@@ -1,19 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link, useParams } from 'react-router-dom';
 import stringToSlug from '../services/stringToSlug.js';
 
-const NovelPage = (props) => {
+const NovelPage = ({ novels }) => {
   const params = useParams();
-  const novel_data = props.novels;
 
   const NovelsDisplay = () =>
-    novel_data.map((item, index) => {
+    novels.map((item, index) => {
       if (stringToSlug(item.title) == params.novelSlug) {
         const id = `${index}-${item.title}`;
         const title = item.title;
         const poster = item.poster;
-        const slug = stringToSlug(title);
-        const description = item.description;
         const averageRating = item.averageRating;
         const startDate = item.startDate;
         const endDate = item.endDate;
@@ -53,7 +51,6 @@ const NovelPage = (props) => {
                 </div>
               </div>
               <h3>Synopsis</h3>
-
               <p className='novel-synopsis'>{synopsis}</p>
             </div>
           </div>
@@ -62,6 +59,10 @@ const NovelPage = (props) => {
     });
 
   return <NovelsDisplay />;
+};
+
+NovelPage.propTypes = {
+  novels: PropTypes.array,
 };
 
 export default NovelPage;

@@ -1,9 +1,8 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const Navbar = (props) => {
-  const { brand, links } = props;
-
+const Navbar = ({ brand, links }) => {
   const NavLinks = () =>
     links.map(({ name, to }) => (
       <li className='nav-item' key={name}>
@@ -21,6 +20,11 @@ const Navbar = (props) => {
       </ul>
     </nav>
   );
+};
+
+Navbar.propTypes = {
+  brand: PropTypes.object,
+  links: PropTypes.array,
 };
 
 export default Navbar;

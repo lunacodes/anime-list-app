@@ -57,6 +57,19 @@ export async function findUserById(res, id) {
 	});
 }
 
+// List All Users
+export async function listUsers(res) {
+	await connect(dbURI, options);
+	User.find({}, (err, result) => {
+		if (err) {
+			console.log(err);
+		} else {
+			console.log('displayed novels');
+			res.json(result);
+		}
+	});
+}
+
 // Login User
 export async function loginUser(res, id) {
 	// This will be replaced with middleware,

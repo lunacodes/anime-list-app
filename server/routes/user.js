@@ -3,6 +3,7 @@ import {
 	addUser,
 	deleteUserById,
 	findUserById,
+	listUsers,
 	loginUser,
 	updateUserById,
 } from '../controllers/user.js';
@@ -37,6 +38,11 @@ userRouter.route('/user/:id').get((req, res) => {
 	findUserById(res, id);
 });
 
+// List All Users
+userRouter.route('/listuser').get((req, res) => {
+	listUsers(res);
+});
+
 // Login a user by ID
 userRouter.route('/login:id').post((req, res) => {
 	const id = req.params.id;
@@ -50,10 +56,5 @@ userRouter.route('/user/update/:id').post((req, res) => {
 
 	updateUserById(res, id);
 });
-
-// List All Users
-// userRouter.route('/user').get((req, res) => {
-//   listUsers(res);
-// });
 
 export default userRouter;

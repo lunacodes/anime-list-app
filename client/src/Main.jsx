@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, Switch } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
 import Profile from './components/Profile';
 import Logout from './components/Logout';
 import NovelPage from './components/NovelPage';
 import getNovelsRequest from './services/getNovelsRequest.js';
-import stringToSlug from './services/stringToSlug.js';
 
 const Main = () => {
   const [novelsData, setNovelsData] = useState();
-  const [slugsList, setSlugsList] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  let routesArr = [];
 
   useEffect(() => {
     async function fetchNovelData() {

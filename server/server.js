@@ -10,6 +10,7 @@ import novelRouter from './routes/novel.js';
 import userRouter from './routes/user.js';
 
 // Environment Variables
+dotenv.config();
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PORT = process.env.PORT || 3001;
 

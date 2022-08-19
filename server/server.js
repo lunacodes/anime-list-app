@@ -44,7 +44,9 @@ const loginCorsOptions = {
 	credentials: true,
 };
 
-login.use(cors(loginCorsOptions));
+cors;
+
+login.use(cors('*'));
 login.use(express.json());
 login.use(cookieParser(process.env.COOKIE_SECRET));
 login.use(bodyParser.json());
@@ -60,7 +62,7 @@ login.use(passport.session());
 login.use(novelRouter);
 login.use(userRouter);
 
-app.use(cors());
+app.use(cors('*'));
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(novelRouter);

@@ -1,11 +1,12 @@
 const getNovelsRequest = async () => {
 	const apiEndpoint =
-		process.env.REACT_APP_API_ENDPOINT || 'http://localhost:3001/fetch';
+		process.env.REACT_APP_API_ENDPOINT || 'http://localhost:3001';
 
 	const options = {
 		method: 'GET',
 		mode: 'cors',
-		url: apiEndpoint + '/fetch',
+		// url: apiEndpoint + '/fetch',
+		url: 'http://localhost:8081/fetch',
 		headers: {
 			'Content-Type': 'application/json',
 		},

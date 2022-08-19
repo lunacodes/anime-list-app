@@ -1,8 +1,12 @@
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 const getNovelsRequest = async () => {
 	const options = {
 		method: 'GET',
 		mode: 'cors',
-		url: 'http://localhost:3001/fetch',
+		url: `http://localhost:${process.env.LOGIN_PORT}/fetch`,
 		headers: {
 			'Content-Type': 'application/json',
 		},

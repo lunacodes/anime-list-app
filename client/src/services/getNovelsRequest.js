@@ -1,12 +1,17 @@
 const getNovelsRequest = async () => {
+	const apiEndpoint =
+		process.env.REACT_APP_API_ENDPOINT || 'http://localhost:3001/fetch';
+
 	const options = {
 		method: 'GET',
 		mode: 'cors',
-		url: `http://localhost:3001/fetch`,
+		url: apiEndpoint + '/fetch',
 		headers: {
 			'Content-Type': 'application/json',
 		},
 	};
+
+	console.log(options);
 
 	let novels_data = [];
 

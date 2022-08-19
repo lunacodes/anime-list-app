@@ -5,7 +5,7 @@ const { connect } = mongoose;
 
 dotenv.config();
 const dbURI = process.env.ATLAS_URI || '';
-const dbName = process.env.DB_NAME || 'novels';
+const dbName = process.env.DB_NAME || 'users2';
 const options = { dbName: dbName };
 
 // Add User
@@ -64,7 +64,7 @@ export async function listUsers(res) {
 		if (err) {
 			console.log(err);
 		} else {
-			console.log('displayed novels');
+			console.log('displayed users');
 			res.json(result);
 		}
 	});
@@ -72,6 +72,7 @@ export async function listUsers(res) {
 
 // Login User
 export async function loginUser(res, id) {
+	console.log(res, id);
 	// This will be replaced with middleware,
 	// and possibly moved to its own controller
 	await connect(dbURI, options);

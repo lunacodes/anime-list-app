@@ -7,10 +7,10 @@ import { fileURLToPath } from 'url';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import passport from 'passport';
-import './utilities/connectdb.js';
+import './utilities/connectdb.js'; // User for auth apparently
 import './strategies/JwtStrategy.js';
 import './strategies/LocalStrategy.js';
-import { getToken, COOKIE_OPTIONS, getRefreshToken } from './authenticate.js';
+// import { getToken, COOKIE_OPTIONS, getRefreshToken } from './authenticate.js';
 import 'connect';
 import session from 'express-session';
 
@@ -26,11 +26,12 @@ const LOGIN_PORT = process.env.LOGIN_PORT || 8081;
 
 const login = express();
 const app = express();
-const allowedOrigins = process.env.ALLOWED_ORIGINS || '*';
+// const allowedOrigins = process.env.ALLOWED_ORIGINS || '*';
 
 const whitelist = process.env.WHITELISTED_DOMAINS
 	? process.env.WHITELISTED_DOMAINS.split(',')
 	: ['*'];
+
 const loginCorsOptions = {
 	origin: function (origin, callback) {
 		if (!origin || whitelist.indexOf(origin) !== -1) {
@@ -43,32 +44,25 @@ const loginCorsOptions = {
 	credentials: true,
 };
 
-const corsOptions = {
-	origin: '*',
-};
-
+login.use(cors(loginCorsOptions));
+login.use(express.json());
 login.use(cookieParser(process.env.COOKIE_SECRET));
 login.use(bodyParser.json());
-login.use(cors(loginCorsOptions));
-login.use(passport.initialize());
-login.use(userRouter);
-login.get('/', function (req, res) {
-	res.send({ status: 'success' });
-});
-
-app.use(cors(corsOptions));
-app.use(express.json());
-app.use(cookieParser(process.env.COOKIE_SECRET));
-login.use(bodyParser.json());
-app.use(
+login.use(
 	session({
 		secret: process.env.COOKIE_SECRET,
 		resave: true,
 		saveUninitialized: true,
 	})
 ); // session secret
-app.use(passport.initialize());
-app.use(passport.session());
+login.use(passport.initialize());
+login.use(passport.session());
+login.use(novelRouter);
+login.use(userRouter);
+
+app.use(cors());
+app.use(express.json());
+app.use(bodyParser.json());
 app.use(novelRouter);
 app.use(userRouter);
 

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 const Logout = () => {
   return <p>This will be the Logout page</p>;

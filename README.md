@@ -33,13 +33,17 @@ The current tech stack for this app is as follows:
 
 - Add search functionality
 - Create User Profile area
-- Add user authentication
 - Write tests
-- eslint: props validation
+- Refactor auth code
+- Add redirect after login
+- Add logout
 
 ### Server
 
 - Add search functionality to `/fetch` route
 - Write tests
 - Rewrite in TypeScript
-- Add User Authentication via localStorage or JWT
+- Change routes and functions to use `req.body` instead of `req.params`
+- Separate login service into its own file
+- Refactor authentication routes and functions
+- Tidy up format of auth routes, e.g. `userRouter.route().get()` vs `userRouter.get()`

@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
+// import { UserContext } from './context/UserContext';
 import './App.scss';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.min.js';
 import Navbar from './components/Navbar';
 import Main from './Main';
 
@@ -8,7 +11,7 @@ const navigation = {
   links: [
     { name: 'Home', to: '/' },
     { name: 'Profile', to: '/profile' },
-    { name: 'Logout', to: '/logout' },
+    { name: 'Login', to: '/login' },
   ],
 };
 

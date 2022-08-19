@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
 import Profile from './components/Profile';
+import LoginCard from './components/LoginCard';
+import Login from './components/Login';
 import Logout from './components/Logout';
+import Register from './components/Register';
 import NovelPage from './components/NovelPage';
 import getNovelsRequest from './services/getNovelsRequest.js';
 
@@ -28,6 +31,7 @@ const Main = () => {
           <Route path='/novels' element={<Home novels={novelsData} />} />
             <Route path=':novelSlug' element={<NovelPage novels={novelsData} />} />
           <Route path='/profile' element={<Profile />} />
+          <Route path='/login' element={<LoginCard />} />
           <Route path='/logout' element={<Logout />} />
         </Routes>
       )}

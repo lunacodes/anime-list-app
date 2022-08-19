@@ -46,7 +46,11 @@ const loginCorsOptions = {
 
 cors;
 
-login.use(cors({ origin: '*' }));
+login.use(
+	cors({
+		origin: ['http://localhost:3000, https://my-light-novels.herokuapp.com'],
+	})
+);
 login.use(express.json());
 login.use(cookieParser(process.env.COOKIE_SECRET));
 login.use(bodyParser.json());

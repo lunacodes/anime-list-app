@@ -10,7 +10,9 @@ import passport from 'passport';
 import './utilities/connectdb.js';
 import './strategies/JwtStrategy.js';
 import './strategies/LocalStrategy.js';
-import './authenticate.js';
+import { getToken, COOKIE_OPTIONS, getRefreshToken } from './authenticate.js';
+import 'connect';
+import session from 'express-session';
 
 // Routes
 import novelRouter from './routes/novel.js';
@@ -45,8 +47,8 @@ const corsOptions = {
 	origin: '*',
 };
 
-login.use(bodyParser.json());
 login.use(cookieParser(process.env.COOKIE_SECRET));
+login.use(bodyParser.json());
 login.use(cors(loginCorsOptions));
 login.use(passport.initialize());
 login.use(userRouter);
@@ -56,6 +58,17 @@ login.get('/', function (req, res) {
 
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use(cookieParser(process.env.COOKIE_SECRET));
+login.use(bodyParser.json());
+app.use(
+	session({
+		secret: process.env.COOKIE_SECRET,
+		resave: true,
+		saveUninitialized: true,
+	})
+); // session secret
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(novelRouter);
 app.use(userRouter);
 

@@ -1,7 +1,3 @@
-import dotenv from 'dotenv';
-
-dotenv.config();
-
 const getNovelsRequest = async () => {
 	const options = {
 		method: 'GET',

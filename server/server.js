@@ -46,7 +46,7 @@ const loginCorsOptions = {
 
 cors;
 
-login.use(cors(loginCorsOptions));
+login.use(cors({ origin: '*' }));
 login.use(express.json());
 login.use(cookieParser(process.env.COOKIE_SECRET));
 login.use(bodyParser.json());
@@ -62,7 +62,7 @@ login.use(passport.session());
 login.use(novelRouter);
 login.use(userRouter);
 
-app.use(cors(loginCorsOptions));
+app.use(cors({ origin: '*' }));
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(novelRouter);

@@ -18,7 +18,7 @@ const Login = () => {
 		const genericErrorMessage = 'Something went wrong! Please try again later.';
 
 		const apiEndpoint =
-			process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8081';
+			process.env.REACT_APP_LOGIN_ENDPOINT || 'http://localhost:8081';
 
 		fetch(apiEndpoint + '/login', {
 			method: 'POST',

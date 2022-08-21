@@ -5,7 +5,7 @@ const { connect } = mongoose;
 
 dotenv.config();
 const dbURI = process.env.ATLAS_URI || '';
-const dbName = process.env.DB_NAME || 'users2';
+const dbName = process.env.DB_NAME || 'novels';
 const options = { dbName: dbName };
 
 // Add User

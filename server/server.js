@@ -10,7 +10,6 @@ import passport from 'passport';
 import './utilities/connectdb.js';
 import './strategies/JwtStrategy.js';
 import './strategies/LocalStrategy.js';
-// import { getToken, COOKIE_OPTIONS, getRefreshToken } from './authenticate.js';
 import 'connect';
 import session from 'express-session';
 
@@ -26,7 +25,6 @@ const LOGIN_PORT = process.env.LOGIN_PORT || 8081;
 
 const login = express();
 const app = express();
-// const allowedOrigins = process.env.ALLOWED_ORIGINS || '*';
 
 const whitelist = process.env.WHITELISTED_DOMAINS
 	? process.env.WHITELISTED_DOMAINS.split(',')
@@ -44,7 +42,7 @@ const loginCorsOptions = {
 };
 
 const corsOptions = {
-	origin: '*',
+	origin: process.env.WHITELISTED_DOMAINS || '*',
 };
 
 login.use(cookieParser(process.env.COOKIE_SECRET));
@@ -96,5 +94,4 @@ app.listen(PORT, () => {
 
 login.listen(LOGIN_PORT, () => {
 	console.log(`Server listening on ${LOGIN_PORT}`);
-	console.log(loginCorsOptions);
 });

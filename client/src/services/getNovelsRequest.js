@@ -5,8 +5,7 @@ const getNovelsRequest = async () => {
 	const options = {
 		method: 'GET',
 		mode: 'cors',
-		// url: apiEndpoint + '/fetch',
-		url: 'http://localhost:3001/fetch',
+		url: apiEndpoint + '/fetch',
 		headers: {
 			'Content-Type': 'application/json',
 		},

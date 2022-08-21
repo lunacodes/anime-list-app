@@ -18,9 +18,9 @@ const Login = () => {
 		const genericErrorMessage = 'Something went wrong! Please try again later.';
 
 		// const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:3001';
-		const apiEndpoint = 'http://localhost:8081';
+		const apiEndpoint = 'https://my-light-novels.herokuapp.com/login';
 
-		fetch(apiEndpoint + '/login', {
+		fetch(apiEndpoint, {
 			method: 'POST',
 			credentials: 'include',
 			headers: { 'Content-Type': 'application/json' },

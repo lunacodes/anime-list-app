@@ -96,4 +96,5 @@ app.listen(PORT, () => {
 
 login.listen(LOGIN_PORT, () => {
 	console.log(`Server listening on ${LOGIN_PORT}`);
+	console.log(loginCorsOptions);
 });

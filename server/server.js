@@ -7,10 +7,10 @@ import { fileURLToPath } from 'url';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import passport from 'passport';
-import './utilities/connectdb.js'; // User for auth apparently
+import './utilities/connectdb.js';
 import './strategies/JwtStrategy.js';
 import './strategies/LocalStrategy.js';
-// import { getToken, COOKIE_OPTIONS, getRefreshToken } from './authenticate.js';
+import { getToken, COOKIE_OPTIONS, getRefreshToken } from './authenticate.js';
 import 'connect';
 import session from 'express-session';
 
@@ -26,12 +26,11 @@ const LOGIN_PORT = process.env.LOGIN_PORT || 8081;
 
 const login = express();
 const app = express();
-// const allowedOrigins = process.env.ALLOWED_ORIGINS || '*';
+const allowedOrigins = process.env.ALLOWED_ORIGINS || '*';
 
 const whitelist = process.env.WHITELISTED_DOMAINS
 	? process.env.WHITELISTED_DOMAINS.split(',')
 	: ['*'];
-
 const loginCorsOptions = {
 	origin: function (origin, callback) {
 		if (!origin || whitelist.indexOf(origin) !== -1) {
@@ -44,16 +43,13 @@ const loginCorsOptions = {
 	credentials: true,
 };
 
-cors;
+const corsOptions = {
+	origin: '*',
+};
 
-login.use(
-	cors({
-		origin: ['http://localhost:3000, https://my-light-novels.herokuapp.com'],
-	})
-);
-login.use(express.json());
 login.use(cookieParser(process.env.COOKIE_SECRET));
 login.use(bodyParser.json());
+login.use(cors(loginCorsOptions));
 login.use(
 	session({
 		secret: process.env.COOKIE_SECRET,
@@ -63,12 +59,24 @@ login.use(
 ); // session secret
 login.use(passport.initialize());
 login.use(passport.session());
-login.use(novelRouter);
 login.use(userRouter);
+login.get('/', function (req, res) {
+	res.send({ status: 'success' });
+});
 
-app.use(cors({ origin: '*' }));
+app.use(cors(corsOptions));
 app.use(express.json());
-app.use(bodyParser.json());
+app.use(cookieParser(process.env.COOKIE_SECRET));
+login.use(bodyParser.json());
+app.use(
+	session({
+		secret: process.env.COOKIE_SECRET,
+		resave: true,
+		saveUninitialized: true,
+	})
+); // session secret
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(novelRouter);
 app.use(userRouter);
 

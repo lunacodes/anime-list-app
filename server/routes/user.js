@@ -90,34 +90,25 @@ userRouter.route('/signup').post((req, res, next) => {
 	}
 });
 
-userRouter.post(
-	'/users/login',
-	passport.authenticate('local'),
-	(req, res, next) => {
-		console.log(`Login Req 1: ${req}`);
-		const token = getToken({ _id: req.user._id });
-		const refreshToken = getRefreshToken({ _id: req.user._id });
-		User.findById(req.user._id).then(
-			(user) => {
-				console.log(`User pass 1: ${user}`);
-				user.refreshToken.push({ refreshToken });
-				user.save((err, usr) => {
-					console.log(`User pre-err check: ${usr}`);
-					if (err) {
-						console.log(`Error 1: ${err}`);
-						res.statusCode = 500;
-						res.send(err);
-					} else {
-						console.log(`Logged in user: ${usr}`);
-						res.cookie('refreshToken', refreshToken, COOKIE_OPTIONS);
-						res.send({ success: true, token });
-					}
-				});
-			},
-			(err) => next(err)
-		);
-	}
-);
+userRouter.post('/login', passport.authenticate('local'), (req, res, next) => {
+	const token = getToken({ _id: req.user._id });
+	const refreshToken = getRefreshToken({ _id: req.user._id });
+	User.findById(req.user._id).then(
+		(user) => {
+			user.refreshToken.push({ refreshToken });
+			user.save((err, usr) => {
+				if (err) {
+					res.statusCode = 500;
+					res.send(err);
+				} else {
+					res.cookie('refreshToken', refreshToken, COOKIE_OPTIONS);
+					res.send({ success: true, token });
+				}
+			});
+		},
+		(err) => next(err)
+	);
+});
 
 userRouter.post('/refreshToken', (req, res, next) => {
 	const { signedCookies = {} } = req;

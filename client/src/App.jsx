@@ -1,7 +1,4 @@
-import React, { useCallback, useContext, useEffect } from 'react';
-// import { UserContext } from './context/UserContext';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.min.js';
+import React from 'react';
 import './App.scss';
 import Navbar from './components/Navbar';
 import Main from './Main';

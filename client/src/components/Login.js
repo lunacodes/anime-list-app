@@ -20,7 +20,7 @@ const Login = () => {
 		const apiEndpoint =
 			process.env.REACT_APP_LOGIN_ENDPOINT || 'http://localhost:8081';
 
-		fetch('https://my-light-novels.com/login', {
+		fetch('https://my-light-novels.com:8081/login', {
 			method: 'POST',
 			credentials: 'include',
 			headers: { 'Content-Type': 'application/json' },

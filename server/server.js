@@ -48,7 +48,8 @@ const corsOptions = {
 
 login.use(cookieParser(process.env.COOKIE_SECRET));
 login.use(bodyParser.json());
-login.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+login.use(cors(loginCorsOptions));
+// login.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 login.use(
 	session({
 		secret: process.env.COOKIE_SECRET,

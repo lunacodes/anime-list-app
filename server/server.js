@@ -12,7 +12,6 @@ import './strategies/JwtStrategy.js';
 import './strategies/LocalStrategy.js';
 import 'connect';
 import session from 'express-session';
-import MongoStore from 'connect-mongo';
 
 // Routes
 import novelRouter from './routes/novel.js';
@@ -43,31 +42,25 @@ const loginCorsOptions = {
 };
 
 const corsOptions = {
-	origin: '*',
+	origin: process.env.WHITELISTED_DOMAINS || '*',
 };
 
-login.use(cookieParser(process.env.COOKIE_SECRET));
-login.use(bodyParser.json());
-login.use(cors(loginCorsOptions));
-// login.use(cors({ origin: 'http://localhost:3000', credentials: true }));
-login.use(cors({ origin: 'https://my-light-novels.com', credentials: true }));
-login.use(
-	session({
-		secret: process.env.COOKIE_SECRET,
-		resave: true,
-		saveUninitialized: true,
-		store: MongoStore.create({
-			mongoUrl: process.env.ATLAS_URI,
-			dbName: 'users',
-		}),
-	})
-); // session secret
-login.use(passport.initialize());
-login.use(passport.session());
-login.use(userRouter);
-login.get('/', function (req, res) {
-	res.send({ status: 'success' });
-});
+// login.use(cookieParser(process.env.COOKIE_SECRET));
+// login.use(bodyParser.json());
+// login.use(cors(loginCorsOptions));
+// login.use(
+// 	session({
+// 		secret: process.env.COOKIE_SECRET,
+// 		resave: true,
+// 		saveUninitialized: true,
+// 	})
+// ); // session secret
+// login.use(passport.initialize());
+// login.use(passport.session());
+// login.use(userRouter);
+// login.get('/', function (req, res) {
+// 	res.send({ status: 'success' });
+// });
 
 app.use(cors(corsOptions));
 app.use(express.json());
@@ -78,10 +71,6 @@ app.use(
 		secret: process.env.COOKIE_SECRET,
 		resave: true,
 		saveUninitialized: true,
-		store: MongoStore.create({
-			mongoUrl: process.env.ATLAS_URI,
-			dbName: 'users',
-		}),
 	})
 ); // session secret
 app.use(passport.initialize());
@@ -103,6 +92,6 @@ app.listen(PORT, () => {
 	console.log(`Server listening on ${PORT}`);
 });
 
-login.listen(LOGIN_PORT, () => {
-	console.log(`Server listening on ${LOGIN_PORT}`);
-});
+// login.listen(LOGIN_PORT, () => {
+// 	console.log(`Server listening on ${LOGIN_PORT}`);
+// });

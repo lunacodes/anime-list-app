@@ -45,22 +45,22 @@ const corsOptions = {
 	origin: process.env.WHITELISTED_DOMAINS || '*',
 };
 
-login.use(cookieParser(process.env.COOKIE_SECRET));
-login.use(bodyParser.json());
-login.use(cors(loginCorsOptions));
-login.use(
-	session({
-		secret: process.env.COOKIE_SECRET,
-		resave: true,
-		saveUninitialized: true,
-	})
-); // session secret
-login.use(passport.initialize());
-login.use(passport.session());
-login.use(userRouter);
-login.get('/', function (req, res) {
-	res.send({ status: 'success' });
-});
+// login.use(cookieParser(process.env.COOKIE_SECRET));
+// login.use(bodyParser.json());
+// login.use(cors(loginCorsOptions));
+// login.use(
+// 	session({
+// 		secret: process.env.COOKIE_SECRET,
+// 		resave: true,
+// 		saveUninitialized: true,
+// 	})
+// ); // session secret
+// login.use(passport.initialize());
+// login.use(passport.session());
+// login.use(userRouter);
+// login.get('/', function (req, res) {
+// 	res.send({ status: 'success' });
+// });
 
 app.use(cors(corsOptions));
 app.use(express.json());
@@ -92,6 +92,6 @@ app.listen(PORT, () => {
 	console.log(`Server listening on ${PORT}`);
 });
 
-login.listen(LOGIN_PORT, () => {
-	console.log(`Server listening on ${LOGIN_PORT}`);
-});
+// login.listen(LOGIN_PORT, () => {
+// 	console.log(`Server listening on ${LOGIN_PORT}`);
+// });

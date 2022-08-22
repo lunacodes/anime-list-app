@@ -12,6 +12,7 @@ import './strategies/JwtStrategy.js';
 import './strategies/LocalStrategy.js';
 import 'connect';
 import session from 'express-session';
+import MongoStore from 'connect-mongo';
 
 // Routes
 import novelRouter from './routes/novel.js';
@@ -53,6 +54,10 @@ login.use(
 		secret: process.env.COOKIE_SECRET,
 		resave: true,
 		saveUninitialized: true,
+		store: MongoStore.create({
+			mongoUrl: process.env.ATLAS_URI,
+			dbName: 'users',
+		}),
 	})
 ); // session secret
 login.use(passport.initialize());
@@ -71,6 +76,10 @@ app.use(
 		secret: process.env.COOKIE_SECRET,
 		resave: true,
 		saveUninitialized: true,
+		store: MongoStore.create({
+			mongoUrl: process.env.ATLAS_URI,
+			dbName: 'users',
+		}),
 	})
 ); // session secret
 app.use(passport.initialize());

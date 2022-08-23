@@ -9,7 +9,7 @@ const novelSchema = new Schema(
 		tags: { type: [String], required: true },
 		id: { type: [ObjectId], required: false },
 	},
-	{ collection: 'users' }
+	{ collection: 'novels' }
 );
 
 export const Novel = model('Novel', novelSchema);

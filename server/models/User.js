@@ -16,9 +16,9 @@ const UserSchema = new Schema(
 		lastName: { type: String, default: '' },
 		authStrategy: { type: String, default: 'local' },
 		refreshToken: { type: [Session] },
-		// username: { type: String },
-		// email: { type: String },
-		// password: { type: String },
+		username: { type: String },
+		email: { type: String },
+		password: { type: String },
 		// id: { type: ObjectId },
 	},
 	{ collection: 'users2' }

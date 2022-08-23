@@ -15,7 +15,7 @@ import './authenticate.js';
 // import session from 'express-session';
 
 // Routes
-// import novelRouter from './routes/novel.js';
+import novelRouter from './routes/novel.js';
 import UserRouter from './routes/user.js';
 
 // Environment Variables
@@ -47,6 +47,7 @@ app.use(cors(corsOptions));
 app.use(passport.initialize());
 // app.use(passport.session());
 app.use('/users', UserRouter);
+app.use('/novels', novelRouter);
 // app.use(express.json());
 
 app.get('/', function (req, res) {

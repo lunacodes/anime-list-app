@@ -1,17 +1,7 @@
-import mongoose from 'mongoose';
 import { Novel } from '../models/Novel.js';
-import dotenv from 'dotenv';
-const { connect } = mongoose;
-
-dotenv.config();
-const dbURI = process.env.ATLAS_URI || '';
-const dbName = process.env.DB_NAME || 'novels';
-const options = { dbName: dbName };
 
 // Add Novel
 export async function addNovel(res, title, score, progress, tags) {
-	await connect(dbURI, options);
-
 	const novel = new Novel({
 		title: title,
 		score: score,
@@ -38,7 +28,6 @@ export async function deleteNovelById(res, id) {
 
 // Find Novel
 export async function findNovelById(res, id) {
-	await connect(dbURI, options);
 	Novel.findById(id, (err, result) => {
 		if (err) {
 			console.log(err);
@@ -51,7 +40,6 @@ export async function findNovelById(res, id) {
 
 // List All Novels
 export async function listNovels(res) {
-	await connect(dbURI, options);
 	Novel.find({}, (err, result) => {
 		if (err) {
 			console.log(err);
@@ -64,8 +52,6 @@ export async function listNovels(res) {
 
 // Update Novel
 export async function updateNovelById(res, id) {
-	await connect(dbURI, options);
-
 	const newValues = {
 		title: res.query.title,
 		score: res.query.score,

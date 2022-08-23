@@ -1,58 +1,20 @@
 import express from 'express';
-import {
-	addUser,
-	deleteUserById,
-	findUserById,
-	listUsers,
-	loginUser,
-	updateUserById,
-} from '../controllers/user.js';
-import passport from 'passport';
+const router = express.Router();
 import { User } from '../models/User.js';
+import passport from 'passport';
+import jwt from 'jsonwebtoken';
+
 import {
 	getToken,
 	COOKIE_OPTIONS,
 	getRefreshToken,
 	verifyUser,
 } from '../authenticate.js';
-import jwt from 'jsonwebtoken';
 
-const userRouter = express.Router();
-userRouter.use(express.json());
+// router.use(express.json());
 
-userRouter.get('/me', verifyUser, (req, res, next) => {
-	res.send(req.user);
-});
-
-userRouter.get(['/logout', '../logout'], verifyUser, (req, res, next) => {
-	const { signedCookies = {} } = req;
-	const { refreshToken } = signedCookies;
-	User.findById(req.user._id).then(
-		(user) => {
-			const tokenIndex = user.refreshToken.findIndex(
-				(item) => item.refreshToken === refreshToken
-			);
-
-			if (tokenIndex !== -1) {
-				user.refreshToken.id(user.refreshToken[tokenIndex]._id).remove();
-			}
-
-			user.save((err, usr) => {
-				if (err) {
-					res.statusCode = 500;
-					res.send(err);
-				} else {
-					res.clearCookie('refreshToken', COOKIE_OPTIONS);
-					res.send({ success: true });
-				}
-			});
-		},
-		(err) => next(err)
-	);
-});
-
-userRouter.route('/signup').post((req, res, next) => {
-	// Verify that first name isn't empty
+router.post('/signup', (req, res, next) => {
+	// Verify that first name is not empty
 	if (!req.body.firstName) {
 		res.statusCode = 500;
 		res.send({
@@ -61,9 +23,7 @@ userRouter.route('/signup').post((req, res, next) => {
 		});
 	} else {
 		User.register(
-			new User({
-				username: req.body.username,
-			}),
+			new User({ username: req.body.username }),
 			req.body.password,
 			(err, user) => {
 				if (err) {
@@ -90,13 +50,13 @@ userRouter.route('/signup').post((req, res, next) => {
 	}
 });
 
-userRouter.post('/login', passport.authenticate('local'), (req, res, next) => {
+router.post('/login', passport.authenticate('local'), (req, res, next) => {
 	const token = getToken({ _id: req.user._id });
 	const refreshToken = getRefreshToken({ _id: req.user._id });
 	User.findById(req.user._id).then(
 		(user) => {
 			user.refreshToken.push({ refreshToken });
-			user.save((err, usr) => {
+			user.save((err, user) => {
 				if (err) {
 					res.statusCode = 500;
 					res.send(err);
@@ -110,7 +70,7 @@ userRouter.post('/login', passport.authenticate('local'), (req, res, next) => {
 	);
 });
 
-userRouter.post('/refreshToken', (req, res, next) => {
+router.post('/refreshToken', (req, res, next) => {
 	const { signedCookies = {} } = req;
 	const { refreshToken } = signedCookies;
 
@@ -137,7 +97,7 @@ userRouter.post('/refreshToken', (req, res, next) => {
 							// If the refresh token exists, then create new one and replace it.
 							const newRefreshToken = getRefreshToken({ _id: userId });
 							user.refreshToken[tokenIndex] = { refreshToken: newRefreshToken };
-							user.save((err, usr) => {
+							user.save((err, user) => {
 								if (err) {
 									res.statusCode = 500;
 									res.send(err);
@@ -164,48 +124,35 @@ userRouter.post('/refreshToken', (req, res, next) => {
 	}
 });
 
-// Add a new user
-userRouter.route('/register').post((req, res) => {
-	const firstName = req.query.firstName;
-	const lastName = req.query.lastName;
-	const username = req.query.username;
-	const password = req.query.password;
-	const email = req.query.email;
-
-	addUser(res, firstName, lastName, username, password, email);
+router.get('/me', verifyUser, (req, res, next) => {
+	res.send(req.user);
 });
 
-// Delete a user
-userRouter.route('/user/delete/:id').delete((req, res) => {
-	const id = req.params.id;
+router.get('/logout', verifyUser, (req, res, next) => {
+	const { signedCookies = {} } = req;
+	const { refreshToken } = signedCookies;
+	User.findById(req.user._id).then(
+		(user) => {
+			const tokenIndex = user.refreshToken.findIndex(
+				(item) => item.refreshToken === refreshToken
+			);
 
-	deleteUserById(res, id);
+			if (tokenIndex !== -1) {
+				user.refreshToken.id(user.refreshToken[tokenIndex]._id).remove();
+			}
+
+			user.save((err, user) => {
+				if (err) {
+					res.statusCode = 500;
+					res.send(err);
+				} else {
+					res.clearCookie('refreshToken', COOKIE_OPTIONS);
+					res.send({ success: true });
+				}
+			});
+		},
+		(err) => next(err)
+	);
 });
 
-// Find a single user by ID
-userRouter.route('/user/:id').get((req, res) => {
-	const id = req.params.id;
-
-	findUserById(res, id);
-});
-
-// List All Users
-userRouter.route('/listuser').get((req, res) => {
-	listUsers(res);
-});
-
-// Login a user by ID
-userRouter.route('/login:id').post((req, res) => {
-	const id = req.params.id;
-
-	loginUser(res, id);
-});
-
-// Update a user by ID
-userRouter.route('/user/update/:id').post((req, res) => {
-	const id = req.params.id;
-
-	updateUserById(res, id);
-});
-
-export default userRouter;
+export default router;

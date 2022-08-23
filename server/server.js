@@ -1,35 +1,37 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import path from 'path';
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
+// import path from 'path';
+// import { dirname } from 'path';
+// import { fileURLToPath } from 'url';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import passport from 'passport';
 import './utilities/connectdb.js';
 import './strategies/JwtStrategy.js';
 import './strategies/LocalStrategy.js';
-import 'connect';
-import session from 'express-session';
+// import 'connect';
+import './authenticate.js';
+// import session from 'express-session';
 
 // Routes
-import novelRouter from './routes/novel.js';
+// import novelRouter from './routes/novel.js';
 import userRouter from './routes/user.js';
 
 // Environment Variables
 dotenv.config();
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const PORT = process.env.PORT || 3001;
-const LOGIN_PORT = process.env.LOGIN_PORT || 8081;
+// const __dirname = dirname(fileURLToPath(import.meta.url));
+// const PORT = process.env.PORT || 3001;
 
-const login = express();
 const app = express();
+app.use(bodyParser.json());
+app.use(cookieParser(process.env.COOKIE_SECRET));
 
 const whitelist = process.env.WHITELISTED_DOMAINS
 	? process.env.WHITELISTED_DOMAINS.split(',')
-	: ['*'];
-const loginCorsOptions = {
+	: [];
+
+const corsOptions = {
 	origin: function (origin, callback) {
 		if (!origin || whitelist.indexOf(origin) !== -1) {
 			callback(null, true);
@@ -41,57 +43,20 @@ const loginCorsOptions = {
 	credentials: true,
 };
 
-const corsOptions = {
-	origin: process.env.WHITELISTED_DOMAINS || '*',
-};
-
-// login.use(cookieParser(process.env.COOKIE_SECRET));
-// login.use(bodyParser.json());
-// login.use(cors(loginCorsOptions));
-// login.use(
-// 	session({
-// 		secret: process.env.COOKIE_SECRET,
-// 		resave: true,
-// 		saveUninitialized: true,
-// 	})
-// ); // session secret
-// login.use(passport.initialize());
-// login.use(passport.session());
-// login.use(userRouter);
-// login.get('/', function (req, res) {
-// 	res.send({ status: 'success' });
-// });
-
 app.use(cors(corsOptions));
-app.use(express.json());
-app.use(cookieParser(process.env.COOKIE_SECRET));
-login.use(bodyParser.json());
-app.use(
-	session({
-		secret: process.env.COOKIE_SECRET,
-		resave: true,
-		saveUninitialized: true,
-	})
-); // session secret
 app.use(passport.initialize());
-app.use(passport.session());
-app.use(novelRouter);
-app.use(userRouter);
+// app.use(passport.session());
+app.use('/users', userRouter);
+// app.use(express.json());
 
-app.use(express.static(path.resolve(__dirname, '../client/build')));
-
-app.get('/api', (req, res) => {
-	res.json({ message: 'Hello from server!' });
+app.get('/', function (req, res) {
+	res.send({ status: 'success' });
 });
 
-app.get('*', (req, res) => {
-	res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
-});
+//Start the server in port 8081
 
-app.listen(PORT, () => {
-	console.log(`Server listening on ${PORT}`);
-});
+const server = app.listen(8081, function () {
+	const port = server.address().port;
 
-// login.listen(LOGIN_PORT, () => {
-// 	console.log(`Server listening on ${LOGIN_PORT}`);
-// });
+	console.log('App started at port:', port);
+});

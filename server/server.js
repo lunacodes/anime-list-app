@@ -1,6 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import passport from 'passport';
@@ -14,6 +17,7 @@ import novelRouter from './routes/novel.js';
 import UserRouter from './routes/user.js';
 
 // Environment Variables
+const __dirname = dirname(fileURLToPath(import.meta.url));
 dotenv.config();
 const PORT = process.env.PORT || 8081;
 
@@ -42,8 +46,10 @@ app.use(passport.initialize());
 app.use('/users', UserRouter);
 app.use('/novels', novelRouter);
 
-app.get('/', function (req, res) {
-	res.send({ status: 'success' });
+app.use(express.static(path.resolve(__dirname, '../client/build')));
+
+app.get('*', (req, res) => {
+	res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
 });
 
 const server = app.listen(PORT, function () {

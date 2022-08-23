@@ -1,8 +1,16 @@
 import express from 'express';
-const router = express.Router();
+const UserRouter = express.Router();
 import { User } from '../models/User.js';
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
+// import {
+// 	addUser,
+// 	deleteUserById,
+// 	findUserById,
+// 	listUsers,
+// 	loginUser,
+// 	updateUserById,
+// } from '../controllers/user.js';
 
 import {
 	getToken,
@@ -13,7 +21,7 @@ import {
 
 // router.use(express.json());
 
-router.post('/signup', (req, res, next) => {
+UserRouter.post('/signup', (req, res, next) => {
 	// Verify that first name is not empty
 	if (!req.body.firstName) {
 		res.statusCode = 500;
@@ -50,7 +58,7 @@ router.post('/signup', (req, res, next) => {
 	}
 });
 
-router.post('/login', passport.authenticate('local'), (req, res, next) => {
+UserRouter.post('/login', passport.authenticate('local'), (req, res, next) => {
 	const token = getToken({ _id: req.user._id });
 	const refreshToken = getRefreshToken({ _id: req.user._id });
 	User.findById(req.user._id).then(
@@ -70,7 +78,7 @@ router.post('/login', passport.authenticate('local'), (req, res, next) => {
 	);
 });
 
-router.post('/refreshToken', (req, res, next) => {
+UserRouter.post('/refreshToken', (req, res, next) => {
 	const { signedCookies = {} } = req;
 	const { refreshToken } = signedCookies;
 
@@ -124,11 +132,11 @@ router.post('/refreshToken', (req, res, next) => {
 	}
 });
 
-router.get('/me', verifyUser, (req, res, next) => {
+UserRouter.get('/me', verifyUser, (req, res, next) => {
 	res.send(req.user);
 });
 
-router.get('/logout', verifyUser, (req, res, next) => {
+UserRouter.get('/logout', verifyUser, (req, res, next) => {
 	const { signedCookies = {} } = req;
 	const { refreshToken } = signedCookies;
 	User.findById(req.user._id).then(
@@ -155,4 +163,4 @@ router.get('/logout', verifyUser, (req, res, next) => {
 	);
 });
 
-export default router;
+export default UserRouter;

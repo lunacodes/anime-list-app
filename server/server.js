@@ -16,7 +16,7 @@ import './authenticate.js';
 
 // Routes
 // import novelRouter from './routes/novel.js';
-import userRouter from './routes/user.js';
+import UserRouter from './routes/user.js';
 
 // Environment Variables
 dotenv.config();
@@ -46,7 +46,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(passport.initialize());
 // app.use(passport.session());
-app.use('/users', userRouter);
+app.use('/users', UserRouter);
 // app.use(express.json());
 
 app.get('/', function (req, res) {

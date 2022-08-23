@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 import passportLocalMongoose from 'passport-local-mongoose';
 const { model, Schema } = mongoose;
-// const { model, Schema, ObjectId } = mongoose;
 
 const Session = new Schema({
 	refreshToken: {
@@ -19,7 +18,6 @@ const UserSchema = new Schema(
 		username: { type: String },
 		email: { type: String },
 		password: { type: String },
-		// id: { type: ObjectId },
 	},
 	{ collection: 'users2' }
 );

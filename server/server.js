@@ -1,18 +1,13 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-// import path from 'path';
-// import { dirname } from 'path';
-// import { fileURLToPath } from 'url';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import passport from 'passport';
 import './utilities/connectdb.js';
 import './strategies/JwtStrategy.js';
 import './strategies/LocalStrategy.js';
-// import 'connect';
 import './authenticate.js';
-// import session from 'express-session';
 
 // Routes
 import novelRouter from './routes/novel.js';
@@ -20,8 +15,7 @@ import UserRouter from './routes/user.js';
 
 // Environment Variables
 dotenv.config();
-// const __dirname = dirname(fileURLToPath(import.meta.url));
-// const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 8081;
 
 const app = express();
 app.use(bodyParser.json());
@@ -45,18 +39,14 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(passport.initialize());
-// app.use(passport.session());
 app.use('/users', UserRouter);
 app.use('/novels', novelRouter);
-// app.use(express.json());
 
 app.get('/', function (req, res) {
 	res.send({ status: 'success' });
 });
 
-//Start the server in port 8081
-
-const server = app.listen(8081, function () {
+const server = app.listen(PORT, function () {
 	const port = server.address().port;
 
 	console.log('App started at port:', port);

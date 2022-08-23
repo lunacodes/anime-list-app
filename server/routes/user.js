@@ -19,8 +19,6 @@ import {
 	verifyUser,
 } from '../authenticate.js';
 
-// router.use(express.json());
-
 UserRouter.post('/signup', (req, res, next) => {
 	// Verify that first name is not empty
 	if (!req.body.firstName) {

@@ -20,7 +20,7 @@ const Login = () => {
 		const apiEndpoint =
 			process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8081';
 
-		fetch(apiEndpoint + '/login', {
+		fetch(apiEndpoint + '/users/login', {
 			method: 'POST',
 			credentials: 'include',
 			headers: { 'Content-Type': 'application/json' },

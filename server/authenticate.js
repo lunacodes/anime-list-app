@@ -30,5 +30,3 @@ export const getRefreshToken = (user) => {
 };
 
 export const verifyUser = passport.authenticate('jwt', { session: false });
-
-// export { getToken, getRefreshToken, verifyUser };

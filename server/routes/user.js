@@ -65,9 +65,11 @@ UserRouter.post('/login', passport.authenticate('local'), (req, res, next) => {
 			user.save((err, user) => {
 				if (err) {
 					res.statusCode = 500;
+					console.log(`Login Error: ${err}`);
 					res.send(err);
 				} else {
 					res.cookie('refreshToken', refreshToken, COOKIE_OPTIONS);
+					console.log(`Logged in ${user.username}`);
 					res.send({ success: true, token });
 				}
 			});

@@ -1,46 +1,129 @@
-import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
-import './user.controller.js';
+import bcrypt from 'bcrypt';
+import crypto from 'crypto';
+import db from '../_helpers/db.js';
+const secret = process.env.JWT_SECRET;
 
-const secret = 'jdhdhd-kjfjdhrhrerj-uurhr-jjge';
+async function authenticate({ username, password, ipAddress }) {
+	const user = await db.User.findOne({ username });
 
-// users hardcoded for simplicity, store in a db for production applications
-const users = [
-	{
-		id: 1,
-		username: 'test',
-		password: 'test',
-		firstName: 'Test',
-		lastName: 'User',
-	},
-];
+	if (!user || !bcrypt.compareSync(password, user.passwordHash)) {
+		throw 'Username or password is incorrect';
+	}
 
-async function authenticate({ username, password }) {
-	const user = users.find(
-		(u) => u.username === username && u.password === password
-	);
+	// authentication successful so generate jwt and refresh tokens
+	const jwtToken = generateJwtToken(user);
+	const refreshToken = generateRefreshToken(user, ipAddress);
 
-	if (!user) throw 'Username or password is incorrect';
+	// save refresh token
+	await refreshToken.save();
 
-	// create a jwt token that is valid for 7 days
-	const token = jwt.sign({ sub: user.id }, secret, {
-		expiresIn: '7d',
-	});
-
+	// return basic details and tokens
 	return {
-		...omitPassword(user),
-		token,
+		...basicDetails(user),
+		jwtToken,
+		refreshToken: refreshToken.token,
 	};
 }
 
+async function refreshToken({ token, ipAddress }) {
+	const refreshToken = await getRefreshToken(token);
+	const { user } = refreshToken;
+
+	// replace old refresh token with a new one and save
+	const newRefreshToken = generateRefreshToken(user, ipAddress);
+	refreshToken.revoked = Date.now();
+	refreshToken.revokedByIp = ipAddress;
+	refreshToken.replacedByToken = newRefreshToken.token;
+	await refreshToken.save();
+	await newRefreshToken.save();
+
+	// generate new jwt
+	const jwtToken = generateJwtToken(user);
+
+	// return basic details and tokens
+	return {
+		...basicDetails(user),
+		jwtToken,
+		refreshToken: newRefreshToken.token,
+	};
+}
+
+async function revokeToken({ token, ipAddress }) {
+	const refreshToken = await getRefreshToken(token);
+
+	// revoke token and save
+	refreshToken.revoked = Date.now();
+	refreshToken.revokedByIp = ipAddress;
+	await refreshToken.save();
+}
+
 async function getAll() {
-	return users.map((u) => omitPassword(u));
+	const users = await db.User.find();
+	return users.map((x) => basicDetails(x));
+}
+
+async function getById(id) {
+	const user = await getUser(id);
+	return basicDetails(user);
+}
+
+async function getRefreshTokens(userId) {
+	// check that user exists
+	await getUser(userId);
+
+	// return refresh tokens for user
+	const refreshTokens = await db.RefreshToken.find({ user: userId });
+	return refreshTokens;
 }
 
 // helper functions
-function omitPassword(user) {
-	const { password, ...userWithoutPassword } = user;
-	return userWithoutPassword;
+async function getUser(id) {
+	if (!db.isValidId(id)) throw 'User not found';
+	const user = await db.User.findById(id);
+	if (!user) throw 'User not found';
+	return user;
 }
 
-export default { authenticate, getAll };
+async function getRefreshToken(token) {
+	const refreshToken = await db.RefreshToken.findOne({ token }).populate(
+		'user'
+	);
+	if (!refreshToken || !refreshToken.isActive) throw 'Invalid token';
+	return refreshToken;
+}
+
+function generateJwtToken(user) {
+	// create a jwt token containing the user id that expires in 15 minutes
+	return jwt.sign({ sub: user.id, id: user.id }, secret, {
+		expiresIn: '15m',
+	});
+}
+
+function generateRefreshToken(user, ipAddress) {
+	// create a refresh token that expires in 7 days
+	return new db.RefreshToken({
+		user: user.id,
+		token: randomTokenString(),
+		expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+		createdByIp: ipAddress,
+	});
+}
+
+function randomTokenString() {
+	return crypto.randomBytes(40).toString('hex');
+}
+
+function basicDetails(user) {
+	const { id, firstName, lastName, username, role } = user;
+	return { id, firstName, lastName, username, role };
+}
+
+export default {
+	authenticate,
+	refreshToken,
+	revokeToken,
+	getAll,
+	getById,
+	getRefreshTokens,
+};

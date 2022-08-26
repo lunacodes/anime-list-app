@@ -11,7 +11,7 @@ const options = {
 	useCreateIndex: true,
 	dbName: 'test',
 };
-const dbUri = `${process.env.MONGO_DB_URI}`;
+const dbUri = `${process.env.MONGO_DB_CONNECTION_STRING}`;
 mongoose.connect(dbUri || '', options);
 mongoose.Promise = global.Promise;
 

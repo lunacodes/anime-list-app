@@ -1,59 +1,33 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import path from 'path';
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
 import bodyParser from 'body-parser';
-import cookieParser from 'cookie-parser';
-import passport from 'passport';
-import './utilities/connectdb.js';
-import './strategies/JwtStrategy.js';
-import './strategies/LocalStrategy.js';
-import './authenticate.js';
-
-// Routes
-import novelRouter from './routes/novel.js';
+import jwt from './_helpers/jwt.js';
+import errorHandler from './_helpers/error-handler.js';
 import UserRouter from './routes/user.js';
-
-// Environment Variables
-const __dirname = dirname(fileURLToPath(import.meta.url));
-dotenv.config();
-const PORT = process.env.PORT || 8081;
+// import * as userController from './users/user.controller.js';
+// const { authenticate, getAll } = userController;
+// import authenticate from './users/user.controller.js';
+// import getAll from './users/user.controller.js';
 
 const app = express();
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(cors());
+app.use(UserRouter);
 
-const whitelist = process.env.WHITELISTED_DOMAINS
-	? process.env.WHITELISTED_DOMAINS.split(',')
-	: [];
+// use JWT auth to secure the api
+app.use(jwt());
 
-const corsOptions = {
-	origin: function (origin, callback) {
-		if (!origin || whitelist.indexOf(origin) !== -1) {
-			callback(null, true);
-		} else {
-			callback(new Error('Not allowed by CORS'));
-		}
-	},
+// api routes
+// app.use('/', getAll);
+// app.use('/authenticate', authenticate);
 
-	credentials: true,
-};
+// global error handler
+app.use(errorHandler);
 
-app.use(cors(corsOptions));
-app.use(passport.initialize());
-app.use('/users', UserRouter);
-app.use('/novels', novelRouter);
-
-app.use(express.static(path.resolve(__dirname, '../client/build')));
-
-app.get('*', (req, res) => {
-	res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
-});
-
-const server = app.listen(PORT, function () {
-	const port = server.address().port;
-
-	console.log('App started at port:', port);
+// start server
+const port = process.env.NODE_ENV === 'production' ? 80 : 4000;
+const server = app.listen(port, function () {
+	console.log('Server listening on port ' + port);
 });

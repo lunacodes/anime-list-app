@@ -3,6 +3,7 @@ const UserRouter = express.Router();
 import { User } from '../models/User.js';
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
+import userService from '../users/user.service.js';
 // import {
 // 	addUser,
 // 	deleteUserById,
@@ -18,6 +19,20 @@ import {
 	getRefreshToken,
 	verifyUser,
 } from '../authenticate.js';
+
+UserRouter.post('/users/authenticate', function authenticate(req, res, next) {
+	userService
+		.authenticate(req.body)
+		.then((user) => res.json(user))
+		.catch(next);
+});
+
+UserRouter.get('/', function getAll(req, res, next) {
+	userService
+		.getAll()
+		.then((users) => res.json(users))
+		.catch(next);
+});
 
 UserRouter.post('/signup', (req, res, next) => {
 	// Verify that first name is not empty

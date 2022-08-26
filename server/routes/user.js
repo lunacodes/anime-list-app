@@ -20,14 +20,15 @@ import {
 	verifyUser,
 } from '../authenticate.js';
 
-UserRouter.post('/users/authenticate', function authenticate(req, res, next) {
+UserRouter.post('/users/authenticate', (req, res, next) => {
 	userService
 		.authenticate(req.body)
 		.then((user) => res.json(user))
 		.catch(next);
 });
 
-UserRouter.get('/', function getAll(req, res, next) {
+// REMOVE THIS BEFORE PRODUCTION!!!
+UserRouter.get('/user/getall', (req, res, next) => {
 	userService
 		.getAll()
 		.then((users) => res.json(users))

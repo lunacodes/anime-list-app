@@ -1,26 +1,13 @@
+import axios from 'axios';
+
 const getNovelsRequest = async () => {
 	const apiEndpoint =
 		process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8081';
 
-	const options = {
-		method: 'GET',
-		mode: 'cors',
-		url: apiEndpoint + '/novels/fetch',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-	};
-
 	let novels_data = [];
-	const data = await fetch(options.url, {
-		method: 'GET',
-		'mode:': 'cors',
-		headers: {
-			'content-type': 'application/json',
-		},
-	});
-	const data2 = await data.json();
-	data2.data.map((item) => {
+	const data = await axios.get(`${apiEndpoint}/novels/fetch`);
+	const data2 = data.data.data;
+	data2.map((item) => {
 		const novel = item.attributes;
 		const title = novel.canonicalTitle;
 		const thumbs = [];

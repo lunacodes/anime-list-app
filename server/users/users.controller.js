@@ -15,9 +15,24 @@ UserRouter.post(
 	revokeTokenSchema,
 	revokeToken
 );
-UserRouter.get('/users/', authorize(Role.Admin), getAll);
+UserRouter.post('/users/signup/', registerUser);
+
+// authorize() = all logged in users
+// omit authorize() to allow for public access
+UserRouter.get('/users', authorize(Role.Admin), getAll);
+UserRouter.get('/users/all', authorize(Role.Admin), getAll);
 UserRouter.get('/users/:id', authorize(), getById);
 UserRouter.get('/users/:id/refresh-tokens', authorize(), getRefreshTokens);
+
+function registerUser(req, res, next) {
+	const userObj = {
+		firstName: req.body.firstName,
+		lastName: req.body.lastName,
+		username: req.body.username,
+		password: req.body.password,
+	};
+	userService.registerUser(userObj, res, next);
+}
 
 function authenticateSchema(req, res, next) {
 	const schema = Joi.object({
@@ -34,6 +49,8 @@ function authenticate(req, res, next) {
 		.authenticate({ username, password, ipAddress })
 		.then(({ refreshToken, ...user }) => {
 			setTokenCookie(res, refreshToken);
+			const usrmsg = JSON.stringify(user);
+			console.log(`logged in user: ${usrmsg}`);
 			res.json(user);
 		})
 		.catch(next);

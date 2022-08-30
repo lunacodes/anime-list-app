@@ -12,7 +12,6 @@ import errorHandler from './middleware/error-handler.js';
 import createTestUser from './_helpers/create-test-user.js';
 // Routes
 import novelRouter from './routes/novel.js';
-// import UserRouter from './routes/user.js';
 import UserRouter from './users/users.controller.js';
 createTestUser(); // Deactivate this once I've got the User Model set up properly again
 
@@ -21,24 +20,19 @@ dotenv.config();
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PORT = process.env.PORT || 8081;
 
-// const whitelist = process.env.WHITELISTED_DOMAINS
-// 	? process.env.WHITELISTED_DOMAINS.split(',')
-// 	: [];
-//
-// const corsOptions = {
-// 	origin: function (origin, callback) {
-// 		if (!origin || whitelist.indexOf(origin) !== -1) {
-// 			callback(null, true);
-// 		} else {
-// 			callback(new Error('Not allowed by CORS'));
-// 		}
-// 	},
-//
-// 	credentials: true,
-// };
+const whitelist = process.env.WHITELISTED_DOMAINS
+	? process.env.WHITELISTED_DOMAINS.split(',')
+	: [];
 
 const corsOptions = {
-	origin: (origin, callback) => callback(null, true),
+	origin: function (origin, callback) {
+		if (!origin || whitelist.indexOf(origin) !== -1) {
+			callback(null, true);
+		} else {
+			callback(new Error('Not allowed by CORS'));
+		}
+	},
+
 	credentials: true,
 };
 
@@ -50,7 +44,6 @@ app.use(cookieParser());
 app.use(cors(corsOptions));
 app.use(errorHandler);
 app.use(UserRouter);
-// app.use('/users', UserRouter);
 app.use('/novels', novelRouter);
 app.use(errorHandler);
 

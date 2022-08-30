@@ -15,7 +15,7 @@ const Gallery = ({ novels }) => {
 
       return (
         <div key={id} className='gallery-item'>
-          <Link to={slug}>
+          <Link to={`/novels/${slug}`}>
             <img
               src={poster}
               alt={title}
@@ -30,9 +30,11 @@ const Gallery = ({ novels }) => {
     });
 
   return (
-    <div className='gallery'>
-      <NovelsDisplay />
-    </div>
+    <>
+      <div className='gallery'>
+        <NovelsDisplay />
+      </div>
+    </>
   );
 };
 

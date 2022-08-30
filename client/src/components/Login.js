@@ -1,97 +1,125 @@
-import { Alert, Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import 'bootstrap/dist/js/bootstrap.min.js';
-import React, { useContext, useState } from 'react';
-import { UserContext } from '../context/UserContext';
+import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Form from 'react-validation/build/form';
+import Input from 'react-validation/build/input';
+import CheckButton from 'react-validation/build/button';
+import AuthService from '../services/auth.service';
+
+const required = (value) => {
+  if (!value) {
+    return (
+      <div className='invalid-feedback d-block'>This field is required!</div>
+    );
+  }
+};
 
 const Login = () => {
-	const [isSubmitting, setIsSubmitting] = useState(false);
-	const [error, setError] = useState('');
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
-	const [userContext, setUserContext] = useContext(UserContext);
+  const form = useRef();
+  const checkBtn = useRef();
 
-	const formSubmitHandler = (e) => {
-		e.preventDefault();
-		setIsSubmitting(true);
-		setError('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
 
-		const genericErrorMessage = 'Something went wrong! Please try again later.';
+  const navigate = useNavigate();
 
-		const apiEndpoint =
-			process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8081';
+  const onChangeUsername = (e) => {
+    const username = e.target.value;
+    setUsername(username);
+  };
 
-		fetch(apiEndpoint + '/users/login', {
-			method: 'POST',
-			credentials: 'include',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ username: email, password }),
-		})
-			.then(async (response) => {
-				setIsSubmitting(false);
+  const onChangePassword = (e) => {
+    const password = e.target.value;
+    setPassword(password);
+  };
 
-				if (!response.ok) {
-					if (response.status === 400) {
-						setError('Please fill out all the fields correctly!');
-					} else if (response.status === 401) {
-						setError('Invalid email and password combination.');
-					} else {
-						setError(genericErrorMessage);
-					}
-				} else {
-					const data = await response.json();
-					setUserContext((oldValues) => {
-						return { ...oldValues, token: data.token };
-					});
-				}
-			})
-			.catch((error) => {
-				setIsSubmitting(false);
-				setError(genericErrorMessage);
-			});
-	};
+  const handleLogin = (e) => {
+    e.preventDefault();
 
-	return (
-		<>
-			{error && <Alert variant='danger'>{error}</Alert>}
-			<p>
-				If you are currently seeing this form, feel free to enter{' '}
-				<span className='highlight'>user@example.com</span> and{' '}
-				<span className='highlight'>pass</span> as the credentials. You can also
-				register your own account, via the Register tab
-			</p>
+    setMessage('');
+    setLoading(true);
 
-			<Form onSubmit={formSubmitHandler} className='auth-form'>
-				<FormGroup>
-					<Label for='email'>Email</Label>
-					<Input
-						id='email'
-						placeholder='Email'
-						type='email'
-						value={email}
-						onChange={(e) => setEmail(e.target.value)}
-					/>
-				</FormGroup>
-				<FormGroup>
-					<Label for='password'>Password</Label>
-					<Input
-						id='password'
-						placeholder='Password'
-						type='password'
-						value={password}
-						onChange={(e) => setPassword(e.target.value)}
-					/>
-				</FormGroup>
-				<Button
-					variant='primary'
-					disabled={isSubmitting}
-					text={`${isSubmitting ? 'Signing In' : 'Sign In'}`}
-					type='submit'
-				>
-					Sign In
-				</Button>
-			</Form>
-		</>
-	);
+    form.current.validateAll();
+
+    if (checkBtn.current.context._errors.length === 0) {
+      AuthService.login(username, password).then(
+        () => {
+          window.location.reload();
+          navigate('/profile');
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+          setLoading(false);
+          setMessage(resMessage);
+        }
+      );
+    } else {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className='col-md-12'>
+      <div className='card card-container'>
+        <img
+          src='//ssl.gstatic.com/accounts/ui/avatar_2x.png'
+          alt='profile-img'
+          className='profile-img-card'
+        />
+
+        <Form onSubmit={handleLogin} ref={form}>
+          <div className='form-group'>
+            <label htmlFor='username'>Username</label>
+            <Input
+              type='text'
+              className='form-control'
+              name='username'
+              value={username}
+              onChange={onChangeUsername}
+              validations={[required]}
+            />
+          </div>
+
+          <div className='form-group'>
+            <label htmlFor='password'>Password</label>
+            <Input
+              type='password'
+              className='form-control'
+              name='password'
+              value={password}
+              onChange={onChangePassword}
+              validations={[required]}
+            />
+          </div>
+
+          <div className='form-group'>
+            <button className='btn btn-primary btn-block' disabled={loading}>
+              {loading && (
+                <span className='spinner-border spinner-border-sm'></span>
+              )}
+              <span>Login</span>
+            </button>
+          </div>
+
+          {message && (
+            <div className='form-group'>
+              <div className='alert alert-danger' role='alert'>
+                {message}
+              </div>
+            </div>
+          )}
+          <CheckButton style={{ display: 'none' }} ref={checkBtn} />
+        </Form>
+      </div>
+    </div>
+  );
 };
 
 export default Login;

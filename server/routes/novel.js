@@ -45,7 +45,6 @@ NovelRouter.route('/fetch').get((req, res) => {
 			return res.json();
 		})
 		.then((user) => {
-			// console.log(user);
 			res.json(user);
 		})
 		.catch((err) => {
@@ -55,7 +54,7 @@ NovelRouter.route('/fetch').get((req, res) => {
 
 // Find a single novel by ID
 NovelRouter.route('/:id').get((req, res) => {
-	const id = req.params.id;
+	const id = req.body.id;
 	console.log(res);
 
 	findNovelById(res, id);
@@ -68,7 +67,7 @@ NovelRouter.route('').get((req, res) => {
 
 // Update a novel by ID
 NovelRouter.route('/update/:id').post((req, res) => {
-	const id = req.params.id;
+	const id = req.body.id;
 
 	updateNovelById(res, id);
 });

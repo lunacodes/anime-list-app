@@ -4,10 +4,13 @@ body {
 
 .site-nav,
 .site-main {
-  width: 90%;
+  padding-left: 5%;
+  padding-right: 5%;
 }
 
 .site-main {
+  background: white;
   margin: 0 auto;
-  padding: 40px 0;
+  padding-bottom: 40px;
+  padding-top: 40px;
 }

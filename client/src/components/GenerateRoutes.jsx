@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Routes, Route } from 'react-router-dom';
-import Home from '../components/Home';
-import Profile from '../components/Profile';
-import Login from '../components/Login';
-import Logout from '../components/Logout';
-import NovelPage from '../components/NovelPage';
-import getNovelsRequest from '../services/getNovelsRequest.js';
+import Home from './Home';
+import Profile from './Profile';
+import Login from './Login';
+import NovelPage from './NovelPage';
+// import PageNotFound from './PageNotFound';
+import Register from './Register';
+import BoardUser from './BoardUser';
 
-const GenerateRoutes = ({ novelsData }) =>  {
+const GenerateRoutes = ({ novelsData }) => {
   const novel_data = novelsData;
   const novels_arr = [];
 
@@ -16,24 +17,31 @@ const GenerateRoutes = ({ novelsData }) =>  {
     novels_arr.push(Object.values(novel));
   });
 
-
-	return (
-		<>
-		<Routes>
-			<Route path='/' element={<Home novels={novelsData} />} />
-			<Route path='/novels' element={<Home novels={novelsData} />} />
-				<Route path=':novelSlug' element={<NovelPage novels={novelsData} />} />
-			<Route path='/profile' element={<Profile />} />
-			<Route path='/login' element={<Login />} />
-			<Route path='/logout' element={<Logout />} />
-		</Routes>
-		</>
-	)
-}
+  return (
+    <>
+      <Routes>
+        {/* <Route path='*' element={<PageNotFound />} /> */}
+        <Route exact path={'/'} element={<Home novels={novelsData} />} />
+        <Route path='/novels' element={<Home novels={novelsData} />} />
+        <Route
+          path='/novels/:novelSlug'
+          element={<NovelPage novels={novelsData} />}
+        />
+        <Route exact path='/login' element={<Login />} />
+        <Route exact path='/register' element={<Register />} />
+        <Route
+          exact
+          path='/profile'
+          element={<Profile novels={novelsData} />}
+        />
+        <Route path='/user' element={<BoardUser />} />
+      </Routes>
+    </>
+  );
+};
 
 GenerateRoutes.propTypes = {
   novelsData: PropTypes.array,
 };
-
 
 export default GenerateRoutes;

@@ -1,0 +1,72 @@
+.user-profile {
+  background: white;
+  border: 1px solid $border-color;
+  border-top: 0;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+
+  &--heading {
+    background: #e9ecef;
+    border: 1px solid $border-color;
+    border-top: 0;
+    font-size: 1.5rem;
+    line-height: 1.625;
+    margin-bottom: 0;
+    padding: 10px 20px;
+    width: 100%;
+  }
+
+  &--left-side {
+    background: white;
+    border: 1px solid $border-color;
+    margin-right: 40px;
+  }
+
+  &--right-side {
+    border: 1px solid $border-color;
+    max-width: calc(100% - 300px);
+    padding: 20px;
+  }
+
+  .profile-img-card {
+    border: 1px solid $border-color;
+    border-radius: 0;
+    height: 224px;
+    margin: 0 0 10px;
+    width: 224px;
+  }
+
+  .user-stats {
+    list-style-type: none;
+    padding: 0 10px;
+  }
+
+  .user-bio {
+    margin: 0 0 2rem;
+  }
+
+  .user-novels--heading {
+    margin: 0 0 1.5rem;
+  }
+
+  .gallery {
+    // gap: 20px 80px;
+    justify-content: flex-start;
+  }
+
+  .gallery-item {
+    height: auto;
+    margin: 0 auto;
+    width: 200px;
+  }
+
+  .gallery-img {
+    height: 291px;
+    width: 200px;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+  }
+}

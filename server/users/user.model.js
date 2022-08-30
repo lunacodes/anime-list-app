@@ -2,9 +2,10 @@ import mongoose from 'mongoose';
 const { model, Schema } = mongoose;
 
 const schema = new Schema({
-	firstName: { type: String, required: true },
-	lastName: { type: String, required: true },
+	firstName: { type: String, unique: false, required: false },
+	lastName: { type: String, unique: false, required: false },
 	username: { type: String, unique: true, required: true },
+	email: { type: String, unique: false, required: false },
 	passwordHash: { type: String, required: true },
 	role: { type: String, required: true },
 });

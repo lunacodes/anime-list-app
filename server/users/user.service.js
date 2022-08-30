@@ -2,6 +2,9 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
 import db from '../_helpers/db.js';
+// import User from '../users/user.model.js';
+import Roles from '../_helpers/role.js';
+
 const secret = process.env.JWT_SECRET;
 
 async function authenticate({ username, password, ipAddress }) {
@@ -77,6 +80,18 @@ async function getRefreshTokens(userId) {
 	return refreshTokens;
 }
 
+async function registerUser({ firstName, lastName, username, password }, res) {
+	const user = new db.User({
+		firstName: firstName,
+		lastName: lastName,
+		username: username,
+		passwordHash: bcrypt.hashSync(`${password}`, 10),
+		role: Roles.User,
+	});
+	await user.save();
+	res.json(user);
+}
+
 // helper functions
 async function getUser(id) {
 	if (!db.isValidId(id)) throw 'User not found';
@@ -119,11 +134,14 @@ function basicDetails(user) {
 	return { id, firstName, lastName, username, role };
 }
 
-export default {
+const userService = {
 	authenticate,
+	registerUser,
 	refreshToken,
 	revokeToken,
 	getAll,
 	getById,
 	getRefreshTokens,
 };
+
+export default userService;

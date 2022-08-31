@@ -88,8 +88,13 @@ async function registerUser({ firstName, lastName, username, password }, res) {
 		passwordHash: bcrypt.hashSync(`${password}`, 10),
 		role: Roles.User,
 	});
-	await user.save();
-	res.json(user);
+	// await user.save();
+	await user.save((err, user) => {
+		if (err) {
+			return res.send(`Error: \n${err}`);
+		}
+		res.json(user);
+	});
 }
 
 // helper functions

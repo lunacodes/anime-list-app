@@ -1,4 +1,5 @@
-import jwt from 'express-jwt';
+// import jwt from 'express-jwt';
+import { expressjwt as jwt } from 'express-jwt';
 import dotenv from 'dotenv';
 import db from '../_helpers/db.js';
 

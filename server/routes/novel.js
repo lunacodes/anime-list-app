@@ -55,7 +55,7 @@ NovelRouter.route('/fetch').get((req, res) => {
 // Find a single novel by ID
 NovelRouter.route('/:id').get((req, res) => {
 	const id = req.body.id;
-	console.log(res);
+	// console.log(res);
 
 	findNovelById(res, id);
 });

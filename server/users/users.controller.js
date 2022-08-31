@@ -49,8 +49,8 @@ function authenticate(req, res, next) {
 		.authenticate({ username, password, ipAddress })
 		.then(({ refreshToken, ...user }) => {
 			setTokenCookie(res, refreshToken);
-			const usrmsg = JSON.stringify(user);
-			console.log(`logged in user: ${usrmsg}`);
+			const usrmsg = JSON.stringify(user.username);
+			console.log(`logged in username: ${usrmsg}`);
 			res.json(user);
 		})
 		.catch(next);

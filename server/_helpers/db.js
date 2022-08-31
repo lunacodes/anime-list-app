@@ -7,8 +7,6 @@ dotenv.config();
 const options = {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
-	useFindAndModify: false,
-	useCreateIndex: true,
 	dbName: 'test',
 };
 const dbUri = `${process.env.MONGO_DB_CONNECTION_STRING}`;

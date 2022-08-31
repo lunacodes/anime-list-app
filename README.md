@@ -1,10 +1,6 @@
 # My Light Novel App
 
-NOTE: server code was from:
-https://jasonwatmore.com/post/2020/06/17/nodejs-mongodb-api-jwt-authentication-with-refresh-tokens#testing-postman
-https://github.com/cornflourblue/node-mongo-jwt-refresh-tokens-api
-
-This app is an in-progress exercise, in order for me to further my React, Typescript, and Node knowledge.
+This app is an in-progress exercise, in order for me to further my React, Node, and MongoDB knowledge. I plan to implement Typescript later on, as well.
 
 Demo: [My Light Novels (Heroku App)](https://my-light-novels.herokuapp.com/)
 
@@ -40,6 +36,9 @@ The current tech stack for this app is as follows:
 - Write tests
 - Set Logout redirect to go the previous page, or homepage
 - Tidy up Navbar dynamic logic
+- Tidy up messages and redirects for user login & registration
+- Add ability for user to add novels to their profile
+
 
 ### Server
 
@@ -47,4 +46,4 @@ The current tech stack for this app is as follows:
 - Write tests
 - Rewrite in TypeScript
 - Use consistent route setup style - `userRouter.route().get()` vs `userRouter.get()`
-- Implement user roles (low priority)
+- Add ability for user to add novels to their profile

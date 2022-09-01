@@ -1,12 +1,7 @@
 import axios from 'axios';
 
 const getNovelsRequest = async () => {
-<<<<<<< Updated upstream
-	const apiEndpoint =
-		process.env.REACT_APP_API_ENDPOINT;
-=======
 	const apiEndpoint = process.env.REACT_APP_API_ENDPOINT;
->>>>>>> Stashed changes
 
 	let novels_data = [];
 	const data = await axios.get(`${apiEndpoint}/novels/fetch`);

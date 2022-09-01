@@ -1,11 +1,13 @@
-.App-header {
+.site-nav {
   align-items: center;
-  background-color: $background-accent;
+  background-color: $background-accent !important;
   color: white;
   display: flex;
   flex-flow: row nowrap;
   font-size: 20px;
+  height: 60px;
   justify-content: space-between;
+  margin: 0 auto;
 
   a {
     color: $nav-link-color;
@@ -17,18 +19,6 @@
       color: $nav-link-color;
     }
   }
-}
-
-.site-nav {
-  align-items: center;
-  background-color: $background-accent !important;
-  color: white;
-  display: flex;
-  flex-flow: row nowrap;
-  font-size: 20px;
-  height: 60px;
-  justify-content: space-between;
-  margin: 0 auto;
 }
 
 .nav-links {

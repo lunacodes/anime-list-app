@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const getNovelsRequest = async () => {
 	const apiEndpoint =
-		process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8081';
+		process.env.REACT_APP_API_ENDPOINT;
 
 	let novels_data = [];
 	const data = await axios.get(`${apiEndpoint}/novels/fetch`);

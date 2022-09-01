@@ -15,6 +15,7 @@ const Navbar = ({ currentUser, logOut }) => {
 							Home
 						</Link>
 					</li>
+				</div>
 
 				{currentUser ? (
 					<div className='navbar-nav ml-auto'>

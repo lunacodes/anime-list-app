@@ -1,7 +1,7 @@
 {
   "name": "light-novel-app",
   "version": "1.0.0",
-  "description": "NOTE: server code was from: https://jasonwatmore.com/post/2020/06/17/nodejs-mongodb-api-jwt-authentication-with-refresh-tokens#testing-postman https://github.com/cornflourblue/node-mongo-jwt-refresh-tokens-api",
+  "description": "An app for keeping track of light novels you've read",
   "main": "server/server.js",
   "type": "module",
   "directories": {

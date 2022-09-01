@@ -7,15 +7,15 @@ const getPublicContent = () => {
 };
 
 const getUserBoard = () => {
-	return axios.get(API_URL + '/user');
+	return axios.get(`${API_URL}/user`);
 };
 
 const getModeratorBoard = () => {
-	return axios.get(API_URL + '/mod');
+	return axios.get(`${API_URL}/mod`);
 };
 
 const getAdminBoard = () => {
-	return axios.get(API_URL + '/admin');
+	return axios.get(`${API_URL}/admin`);
 };
 
 const UserService = {

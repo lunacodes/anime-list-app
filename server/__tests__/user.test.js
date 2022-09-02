@@ -1,10 +1,5 @@
-// import dbHandler from './db-handler.js';
-import mongoose from 'mongoose';
 import User from '../users/user.model.js';
 import bcrypt from 'bcrypt';
-// import registerUser from '../users/user.controller.js';
-// import { MongoClient } from 'mongodb';
-import { MongoMemoryServer } from 'mongodb-memory-server';
 import { connectDB, dropDB, dropCollections } from './db-handler.js';
 
 beforeAll(async () => {
@@ -20,7 +15,7 @@ afterEach(async () => {
 });
 
 describe('User Model', () => {
-	it('should create a user item successfully', async () => {
+	it('creates a user item successfully', async () => {
 		let password = 'lunacodes2';
 		let validUser = {
 			firstName: 'Luna',

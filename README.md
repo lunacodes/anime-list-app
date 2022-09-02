@@ -39,7 +39,6 @@ The current tech stack for this app is as follows:
 - Tidy up messages and redirects for user login & registration
 - Add ability for user to add novels to their profile
 
-
 ### Server
 
 - Add search functionality to `/fetch` route
@@ -47,3 +46,7 @@ The current tech stack for this app is as follows:
 - Rewrite in TypeScript
 - Use consistent route setup style - `userRouter.route().get()` vs `userRouter.get()`
 - Add ability for user to add novels to their profile
+
+## Possible Future Experiments
+
+-Use Redis for auth: https://javascript.plainenglish.io/how-redis-can-make-authentication-10x-easoer-for-your-users-cd8c0601d38

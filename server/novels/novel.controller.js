@@ -5,7 +5,7 @@ import {
 	findNovelById,
 	listNovels,
 	updateNovelById,
-} from '../controllers/novel.js';
+} from '../novels/novel.service.js';
 import fetch from 'cross-fetch';
 
 const NovelRouter = express.Router();

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.scss';
-import AuthService from './services/auth.service';
-import getNovelsRequest from './services/novels.service';
+import AuthService from './services/authService';
+import getNovelsRequest from './services/novelService';
 import Navbar from './components/Navbar';
 import GenerateRoutes from './components/GenerateRoutes';
 import EventBus from './common/EventBus';

@@ -7,7 +7,8 @@ const schema = new Schema({
 	username: { type: String, unique: true, required: true },
 	email: { type: String, unique: false, required: false },
 	passwordHash: { type: String, required: true },
-	role: { type: String, required: true },
+	role: { type: String, required: false },
+	novels: { type: Array, unique: false, required: false },
 });
 
 // Virtual props are convenience props available to the mongoose model

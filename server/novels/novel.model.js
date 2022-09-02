@@ -3,13 +3,14 @@ const { model, Schema, ObjectId } = mongoose;
 
 const novelSchema = new Schema(
 	{
-		title: { type: [String], required: true },
-		score: { type: [Number], required: true },
-		progress: { type: [String], required: true },
+		title: { type: String, required: true },
+		score: { type: Number, required: true },
+		progress: { type: String, required: true },
 		tags: { type: [String], required: true },
 		id: { type: [ObjectId], required: false },
 	},
 	{ collection: 'novels' }
 );
 
-export const Novel = model('Novel', novelSchema);
+const Novel = model('Novel', novelSchema);
+export default Novel;

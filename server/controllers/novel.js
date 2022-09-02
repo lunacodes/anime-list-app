@@ -1,4 +1,4 @@
-import { Novel } from '../models/Novel.js';
+import Novel from '../novels/novel.model.js';
 
 // Add Novel
 export async function addNovel(res, title, score, progress, tags) {

@@ -28,7 +28,7 @@ NovelRouter.route('/delete').delete((req, res) => {
 	deleteNovelById(res, id);
 });
 
-// Fetch all novels
+// Fetch a novel
 NovelRouter.route('/fetch').get((req, res) => {
 	const queryStr = req.query.query;
 

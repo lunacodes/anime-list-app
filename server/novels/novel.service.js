@@ -35,12 +35,13 @@ export function fetchNovels(res, queryStr) {
 	fetch(url)
 		.then((res) => {
 			if (res.status >= 400) {
+				console.error(`Bad response from server: ${res.status}`);
 				throw new Error(`Bad response from server: ${res.status}`);
 			}
 			return res.json();
 		})
-		.then((user) => {
-			res.json(user);
+		.then((novel) => {
+			res.json(novel);
 		})
 		.catch((err) => {
 			console.error(err);

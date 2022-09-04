@@ -6,7 +6,7 @@ import stringToSlug from '../services/stringToSlug.js';
 const NovelPage = ({ novels }) => {
 	const params = useParams();
 
-	const NovelsDisplay = () =>
+	const NovelDisplay = () =>
 		novels.map((item, index) => {
 			if (stringToSlug(item.title) == params.novelSlug) {
 				const id = `${index}-${item.title}`;
@@ -58,7 +58,7 @@ const NovelPage = ({ novels }) => {
 			}
 		});
 
-	return <NovelsDisplay />;
+	return <NovelDisplay />;
 };
 
 NovelPage.propTypes = {

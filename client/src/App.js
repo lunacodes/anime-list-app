@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -16,24 +16,35 @@ const App = () => {
 	const [novelsData, setNovelsData] = useState();
 	const [isLoading, setIsLoading] = useState(true);
 
-	const fetchData = async (query, cb) => {
-		const res = await getNovelsRequest(query);
-		cb(res);
+	// Search Bar Functions & Effects
+	const changeHandler = (event) => {
+		setNovelsQueryStr(event.target.value);
 	};
 
-	const debouncedFetchData = debounce((query, cb) => {
-		fetchData(query, cb);
-	}, 1000);
-
+	const debouncedChangeHandler = useMemo(
+		() => debounce(changeHandler, 300),
+		[novelsQueryStr]
+	);
+	// Stop the invocation of the debounced function
+	// after unmounting
 	useEffect(() => {
-		debouncedFetchData(novelsQueryStr, async (res) => {
-			const data = res;
+		return () => {
+			debouncedChangeHandler.cancel();
+		};
+	}, []);
+
+	// Novel Data Effect
+	useEffect(() => {
+		async function fetchNovelData() {
+			const data = await getNovelsRequest(novelsQueryStr);
 			const novel_data = await Object.values(data);
 			await setNovelsData(novel_data);
 			setIsLoading(false);
-		});
+		}
+		fetchNovelData();
 	}, [novelsQueryStr]);
 
+	// User Auth function & Effects
 	useEffect(() => {
 		const user = AuthService.getCurrentUser();
 
@@ -62,12 +73,7 @@ const App = () => {
 					<Navbar currentUser={currentUser} logOut={logOut} />
 
 					<main id='site-main' className='site-main'>
-						<SearchBar
-							value={novelsQueryStr}
-							onChangeText={(e) => {
-								setNovelsQueryStr(e.target.value);
-							}}
-						/>
+						<SearchBar onChangeText={debouncedChangeHandler} />
 						<GenerateRoutes
 							novelsData={novelsData}
 							currentUser={currentUser}
@@ -81,7 +87,6 @@ const App = () => {
 };
 
 App.proptypes = {
-	value: PropTypes.string,
 	onChangeText: PropTypes.func,
 };
 

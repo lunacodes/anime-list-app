@@ -31,22 +31,21 @@ The current tech stack for this app is as follows:
 
 ### Client
 
-- Add search functionality
 - Flesh Out User Profile area
 - Write tests
 - Set Logout redirect to go the previous page, or homepage
 - Tidy up Navbar dynamic logic
 - Tidy up messages and redirects for user login & registration
 - Add ability for user to add novels to their profile
+- Only display search bar on specific pages
 
 ### Server
 
-- Add search functionality to `/fetch` route
-- Write tests
+- Write more tests
 - Rewrite in TypeScript
 - Use consistent route setup style - `userRouter.route().get()` vs `userRouter.get()`
 - Add ability for user to add novels to their profile
 
-## Possible Future Experiments
+## Possible Future Implementations
 
 -Use Redis for auth: https://javascript.plainenglish.io/how-redis-can-make-authentication-10x-easoer-for-your-users-cd8c0601d38

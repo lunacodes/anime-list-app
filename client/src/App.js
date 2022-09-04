@@ -57,7 +57,7 @@ const App = () => {
 
 	return (
 		<>
-			{!isLoading && novelsData.length > 0 && (
+			{!isLoading && (
 				<div>
 					<Navbar currentUser={currentUser} logOut={logOut} />
 

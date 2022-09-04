@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import debounce from 'lodash.debounce';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.scss';
 import AuthService from './services/authService';
@@ -15,14 +16,22 @@ const App = () => {
 	const [novelsData, setNovelsData] = useState();
 	const [isLoading, setIsLoading] = useState(true);
 
+	const fetchData = async (query, cb) => {
+		const res = await getNovelsRequest(query);
+		cb(res);
+	};
+
+	const debouncedFetchData = debounce((query, cb) => {
+		fetchData(query, cb);
+	}, 1000);
+
 	useEffect(() => {
-		async function fetchNovelData() {
-			const data = await getNovelsRequest(novelsQueryStr);
+		debouncedFetchData(novelsQueryStr, async (res) => {
+			const data = res;
 			const novel_data = await Object.values(data);
 			await setNovelsData(novel_data);
 			setIsLoading(false);
-		}
-		fetchNovelData();
+		});
 	}, [novelsQueryStr]);
 
 	useEffect(() => {

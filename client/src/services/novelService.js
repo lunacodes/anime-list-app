@@ -1,10 +1,14 @@
 import axios from 'axios';
 
-const getNovelsRequest = async () => {
+const getNovelsRequest = async (novelsQueryStr) => {
+	const query = novelsQueryStr;
 	const apiEndpoint = process.env.REACT_APP_API_ENDPOINT;
 
 	let novels_data = [];
-	const data = await axios.get(`${apiEndpoint}/novels/fetch`);
+
+	const data = await axios.get(`${apiEndpoint}/novels/fetch`, {
+		params: { query: query },
+	});
 	const data2 = data.data.data;
 	data2.map((item) => {
 		const novel = item.attributes;

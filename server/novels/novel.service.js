@@ -1,4 +1,5 @@
 import Novel from '../novels/novel.model.js';
+import fetch from 'cross-fetch';
 
 // Add Novel
 export async function addNovel(res, title, score, progress, tags) {
@@ -24,6 +25,26 @@ export async function deleteNovelById(res, id) {
 			console.log(`Deleted novel: ${novel}`);
 		}
 	});
+}
+
+// Fetch novels
+export function fetchNovels(res, queryStr) {
+	const base = '//kitsu.io/api/edge/anime';
+	const url = queryStr.length > 0 ? `${base}?filter[text]=${queryStr}` : base;
+
+	fetch(url)
+		.then((res) => {
+			if (res.status >= 400) {
+				throw new Error(`Bad response from server: ${res.status}`);
+			}
+			return res.json();
+		})
+		.then((user) => {
+			res.json(user);
+		})
+		.catch((err) => {
+			console.error(err);
+		});
 }
 
 // Find Novel

@@ -2,11 +2,11 @@ import express from 'express';
 import {
 	addNovel,
 	deleteNovelById,
+	fetchNovels,
 	findNovelById,
 	listNovels,
 	updateNovelById,
 } from '../novels/novel.service.js';
-import fetch from 'cross-fetch';
 
 const NovelRouter = express.Router();
 NovelRouter.use(express.json());
@@ -30,26 +30,9 @@ NovelRouter.route('/delete').delete((req, res) => {
 
 // Fetch all novels
 NovelRouter.route('/fetch').get((req, res) => {
-	/**
-	 * Example of subqueries that actually work:
-	 * https://kitsu.io/api/edge/anime?filter[text]=sword%20art%20online
-	 * /anime?page[limit]=5&page[offset]=0
-	 * Limit can increase to 20
-	 */
+	const queryStr = req.query.query;
 
-	fetch('//kitsu.io/api/edge/anime')
-		.then((res) => {
-			if (res.status >= 400) {
-				throw new Error('Bad response from server');
-			}
-			return res.json();
-		})
-		.then((user) => {
-			res.json(user);
-		})
-		.catch((err) => {
-			console.error(err);
-		});
+	fetchNovels(res, queryStr);
 });
 
 // Find a single novel by ID

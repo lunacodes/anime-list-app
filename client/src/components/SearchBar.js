@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const SearchBar = ({ onChangeText }) => {
 	return (
-		<div className='search-container'>
+		<div className='container-fluid search-container'>
 			<input
 				type='text'
 				onChange={onChangeText}

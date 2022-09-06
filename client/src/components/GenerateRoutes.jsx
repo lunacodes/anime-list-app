@@ -5,7 +5,7 @@ import Home from './Home';
 import Profile from './Profile';
 import Login from './Login';
 import NovelPage from './NovelPage';
-// import PageNotFound from './PageNotFound';
+import PageNotFound from './PageNotFound';
 import Register from './Register';
 import BoardUser from './BoardUser';
 
@@ -20,13 +20,15 @@ const GenerateRoutes = ({ novelsData }) => {
   return (
     <>
       <Routes>
-        {/* <Route path='*' element={<PageNotFound />} /> */}
+        <Route path='*' element={<PageNotFound />} />
         <Route exact path={'/'} element={<Home novels={novelsData} />} />
-        <Route path='/novels' element={<Home novels={novelsData} />} />
-        <Route
-          path='/novels/:novelSlug'
-          element={<NovelPage novels={novelsData} />}
-        />
+        <Route path='novels'>
+          <Route index element={<Home novels={novelsData} />} />
+          <Route
+            path=':novelSlug'
+            element={<NovelPage novels={novelsData} />}
+          />
+        </Route>
         <Route exact path='/login' element={<Login />} />
         <Route exact path='/register' element={<Register />} />
         <Route

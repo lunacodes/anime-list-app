@@ -2,7 +2,6 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
 import db from '../_helpers/db.js';
-// import User from '../users/user.model.js';
 import Roles from '../_helpers/role.js';
 
 const secret = process.env.JWT_SECRET;
@@ -61,7 +60,7 @@ async function revokeToken({ token, ipAddress }) {
 	await refreshToken.save();
 }
 
-async function getAll() {
+async function getAllUsers() {
 	const users = await db.User.find();
 	return users.map((x) => basicDetails(x));
 }
@@ -80,15 +79,101 @@ async function getRefreshTokens(userId) {
 	return refreshTokens;
 }
 
+async function addNovelToUser(res, user, novelToAdd) {
+	let userNovels = user.novels;
+
+	if (userNovels.includes(novelToAdd)) {
+		console.error("Novel is already in user's library");
+		return res.send("Novel is already in user's library");
+	} else {
+		userNovels.push(novelToAdd);
+		userNovels.sort();
+
+		user.novels = userNovels;
+		await user.save((err, user) => {
+			if (err) {
+				console.log(`Error 1: \n${err}`);
+				return res.send(`Error: \n${err}`);
+			}
+			console.log('Add - user.save ran:', user);
+			res.json(user);
+			return user;
+		});
+	}
+}
+
+async function removeNovelFromUser(res, user, novelToRemove) {
+	let userNovels = user.novels;
+
+	console.log(novelToRemove);
+	console.log(userNovels);
+	if (!userNovels.includes(novelToRemove)) {
+		console.error("Novel not in user's library");
+		return res.send("Novel not in user's library");
+	} else {
+		userNovels = userNovels
+			.filter((val) => {
+				return val !== novelToRemove;
+			})
+			.sort();
+
+		user.novels = userNovels;
+		await user.save((err, user) => {
+			if (err) {
+				console.log(`Error 1: \n${err}`);
+				return res.send(`Error: \n${err}`);
+			}
+			console.log('delete - user.save ran:', user);
+			res.json(user);
+			return user;
+		});
+	}
+}
+
+async function updateUserNovels(res, id, newValues, action = '', next) {
+	console.log('updateUserNovels ran');
+	const user = await getUser(id)
+		.then((user, err) => {
+			if (err) {
+				console.error(`Error 1: ${err}`);
+				return err;
+			}
+
+			switch (action) {
+				case 'add':
+					addNovelToUser(res, user, newValues.novel);
+					break;
+				case 'remove':
+					removeNovelFromUser(res, user, newValues.novel);
+					break;
+				default:
+					db.User.findByIdAndUpdate(id, newValues, (err, user) => {
+						if (err) {
+							console.error(`Error 2: ${err}`);
+							return err;
+						} else {
+							console.log(`Updated user: ${user}`);
+							return user;
+						}
+					});
+
+					break;
+			}
+		})
+		.catch(next);
+
+	return user;
+}
+
 async function registerUser({ firstName, lastName, username, password }, res) {
 	const user = new db.User({
 		firstName: firstName,
 		lastName: lastName,
 		username: username,
 		passwordHash: bcrypt.hashSync(`${password}`, 10),
+		novels: [],
 		role: Roles.User,
 	});
-	// await user.save();
 	await user.save((err, user) => {
 		if (err) {
 			return res.send(`Error: \n${err}`);
@@ -144,9 +229,10 @@ const userService = {
 	registerUser,
 	refreshToken,
 	revokeToken,
-	getAll,
+	getAllUsers,
 	getById,
 	getRefreshTokens,
+	updateUserNovels,
 };
 
 export default userService;

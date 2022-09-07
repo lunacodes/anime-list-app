@@ -33,3 +33,5 @@ describe('User Model', () => {
 		expect(newUser.passwordHash).toBe(validUser.passwordHash);
 	});
 });
+
+// TODO: 9/6/22 - Add tests for adding, removing, and updating novels details

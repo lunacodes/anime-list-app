@@ -29,6 +29,8 @@ The current tech stack for this app is as follows:
 
 ## To-Do
 
+Add documentation with Swagger
+
 ### Client
 
 - Flesh Out User Profile area
@@ -41,6 +43,7 @@ The current tech stack for this app is as follows:
 
 ### Server
 
+- Connect User's `novels` entries with the Novel model
 - Write more tests
 - Rewrite in TypeScript
 - Use consistent route setup style - `userRouter.route().get()` vs `userRouter.get()`

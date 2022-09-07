@@ -6,7 +6,9 @@ import Role from '../_helpers/role.js';
 import userService from './user.service.js';
 const UserRouter = express.Router();
 
-// routes
+// Routes
+// authorize() = all logged in users
+// omit authorize() to allow for public access
 UserRouter.post('/users/authenticate', authenticateSchema, authenticate);
 UserRouter.post('/users/refresh-token', refreshToken);
 UserRouter.post(
@@ -16,13 +18,41 @@ UserRouter.post(
 	revokeToken
 );
 UserRouter.post('/users/signup/', registerUser);
+// TODO: 9/6/22 - Add Auth check for addNovelToUser
+UserRouter.post('/users/add-novel', addNovelToUser);
+UserRouter.post('/users/remove-novel', removeNovelFromUser);
 
-// authorize() = all logged in users
-// omit authorize() to allow for public access
+// TODO: 9/6/22 - Re-add user authorize() checks
 UserRouter.get('/users', authorize(Role.Admin), getAll);
-UserRouter.get('/users/all', authorize(Role.Admin), getAll);
-UserRouter.get('/users/:id', authorize(), getById);
+UserRouter.get('/users/all', getAll);
+UserRouter.get('/users/:id', getById);
 UserRouter.get('/users/:id/refresh-tokens', authorize(), getRefreshTokens);
+
+async function addNovelToUser(req, res, next) {
+	const userId = req.body.id;
+	const novel = req.body.novel;
+
+	if (!novel.length > 0) {
+		return res.json(
+			'Received empty string. Please specificy a novel title to add'
+		);
+	}
+
+	userService.updateUserNovels(res, userId, { novel: novel }, 'add', next);
+}
+
+async function removeNovelFromUser(req, res, next) {
+	const userId = req.body.id;
+	const novel = req.body.novel;
+
+	if (!novel.length > 0) {
+		return res.json(
+			'Received empty string. Please specificy a novel title to remove'
+		);
+	}
+
+	userService.updateUserNovels(res, userId, { novel: novel }, 'remove', next);
+}
 
 function registerUser(req, res, next) {
 	const userObj = {
@@ -41,6 +71,7 @@ function authenticateSchema(req, res, next) {
 	});
 	validateRequest(req, next, schema);
 }
+
 function authenticate(req, res, next) {
 	const { username, password } = req.body;
 	const ipAddress = req.ip;
@@ -95,7 +126,7 @@ function revokeToken(req, res, next) {
 }
 function getAll(req, res, next) {
 	userService
-		.getAll()
+		.getAllUsers()
 		.then((users) => res.json(users))
 		.catch(next);
 }
@@ -106,8 +137,10 @@ function getById(req, res, next) {
 		return res.status(401).json({ message: 'Unauthorized' });
 	}
 
+	const userId = req.params.id !== undefined ? req.params.id : req.body.id;
+
 	userService
-		.getById(req.params.id)
+		.getById(userId)
 		.then((user) => (user ? res.json(user) : res.sendStatus(404)))
 		.catch(next);
 }

@@ -11,7 +11,7 @@ import cookieParser from 'cookie-parser';
 import errorHandler from './middleware/error-handler.js';
 import createTestUser from './_helpers/create-test-user.js';
 // Routes
-import novelRouter from './novels/novel.controller.js';
+import animeRouter from './animes/anime.controller.js';
 import UserRouter from './users/user.controller.js';
 createTestUser(); // Deactivate this once I've got the User Model set up properly again
 
@@ -44,7 +44,7 @@ app.use(cookieParser());
 app.use(cors(corsOptions));
 app.use(errorHandler);
 app.use(UserRouter);
-app.use('/novels', novelRouter);
+app.use('/animes', animeRouter);
 app.use(errorHandler);
 
 app.use(express.static(path.resolve(__dirname, '../client/build')));

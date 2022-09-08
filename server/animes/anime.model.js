@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 const { model, Schema, ObjectId } = mongoose;
 
-const novelSchema = new Schema(
+const animeSchema = new Schema(
 	{
 		title: { type: String, required: true },
 		score: { type: Number, required: true },
@@ -9,8 +9,8 @@ const novelSchema = new Schema(
 		tags: { type: [String], required: true },
 		id: { type: [ObjectId], required: false },
 	},
-	{ collection: 'novels' }
+	{ collection: 'animes' }
 );
 
-const Novel = model('Novel', novelSchema);
-export default Novel;
+const Anime = model('Anime', animeSchema);
+export default Anime;

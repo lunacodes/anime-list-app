@@ -34,4 +34,4 @@ describe('User Model', () => {
 	});
 });
 
-// TODO: 9/6/22 - Add tests for adding, removing, and updating novels details
+// TODO: 9/6/22 - Add tests for adding, removing, and updating anime details

@@ -1,5 +1,5 @@
 {
-  "name": "light-novel-app",
+  "name": "anime-list-app",
   "version": "1.0.0",
   "description": "An app for keeping track of light novels you've read",
   "main": "server/server.js",

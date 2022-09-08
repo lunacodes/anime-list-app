@@ -18,9 +18,9 @@ UserRouter.post(
 	revokeToken
 );
 UserRouter.post('/users/signup/', registerUser);
-// TODO: 9/6/22 - Add Auth check for addNovelToUser
-UserRouter.post('/users/add-novel', addNovelToUser);
-UserRouter.post('/users/remove-novel', removeNovelFromUser);
+// TODO: 9/6/22 - Add Auth check for addAnimeToUser
+UserRouter.post('/users/add-anime', addAnimeToUser);
+UserRouter.post('/users/remove-anime', removeAnimeFromUser);
 
 // TODO: 9/6/22 - Re-add user authorize() checks
 UserRouter.get('/users', authorize(Role.Admin), getAll);
@@ -28,45 +28,38 @@ UserRouter.get('/users/all', getAll);
 UserRouter.get('/users/:id', getById);
 UserRouter.get('/users/:id/refresh-tokens', authorize(), getRefreshTokens);
 
-async function addNovelToUser(req, res, next) {
+async function addAnimeToUser(req, res, next) {
 	const userId = req.body.id;
-	const titleStr = req.body.title;
-	const totalPages = req.body.pages;
-	// const thumb = req.body.thumb;
-	const progress = req.body.progress;
-	const dateAdded = req.body.date_added;
-
-	const novelObj = {
-		title: titleStr,
-		pages: totalPages,
-		progress: progress,
-		dateAdded: dateAdded,
+	const animeObj = {
+		title: req.body.title,
+		thumb: req.body.thumb,
+		episodes: req.body.episodes,
+		status: req.body.status || 'plan to watch',
+		eps_watched: req.body.progress,
+		date_added: req.body.date_added,
 	};
 
-	// console.log(novelObj);
-
-	const isEmpty = Object.keys(novelObj).length === 0;
-
+	const isEmpty = Object.keys(animeObj).length === 0;
 	if (isEmpty) {
 		return res.json(
-			'Received empty object. Please specificy a novel title to add'
+			'Received empty object. Please specificy a anime title to add'
 		);
 	}
 
-	userService.updateUserNovels(res, userId, { novel: novelObj }, 'add', next);
+	userService.updateUserAnimes(res, userId, { anime: animeObj }, 'add', next);
 }
 
-async function removeNovelFromUser(req, res, next) {
+async function removeAnimeFromUser(req, res, next) {
 	const userId = req.body.id;
-	const novel = req.body.novel;
+	const anime = req.body.anime;
 
-	if (!novel.length > 0) {
+	if (!anime.length > 0) {
 		return res.json(
-			'Received empty string. Please specificy a novel title to remove'
+			'Received empty string. Please specificy a anime title to remove'
 		);
 	}
 
-	userService.updateUserNovels(res, userId, { novel: novel }, 'remove', next);
+	userService.updateUserAnimes(res, userId, { anime: anime }, 'remove', next);
 }
 
 function registerUser(req, res, next) {

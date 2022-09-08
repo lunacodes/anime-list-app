@@ -1,34 +1,34 @@
-import Novel from '../novels/novel.model.js';
+import Anime from '../animes/anime.model.js';
 import fetch from 'cross-fetch';
 
-// Add Novel
-export async function addNovel(res, title, score, progress, tags) {
-	const novel = new Novel({
+// Add Anime
+export async function addAnime(res, title, score, progress, tags) {
+	const anime = new Anime({
 		title: title,
 		score: score,
 		progress: progress,
 		tags: tags,
 	});
-	await novel.save();
+	await anime.save();
 
-	console.log('Novel was added:\n', novel);
-	res.json(novel);
+	console.log('Anime was added:\n', anime);
+	res.json(anime);
 }
 
-// Delete Novel
-export async function deleteNovelById(res, id) {
-	Novel.findByIdAndDelete(id, (err, novel) => {
+// Delete Anime
+export async function deleteAnimeById(res, id) {
+	Anime.findByIdAndDelete(id, (err, anime) => {
 		if (err) {
 			console.log(err);
 		} else {
-			res.json(novel);
-			console.log(`Deleted novel: ${novel}`);
+			res.json(anime);
+			console.log(`Deleted anime: ${anime}`);
 		}
 	});
 }
 
-// Fetch novels
-export function fetchNovels(res, queryStr) {
+// Fetch animes
+export function fetchAnimes(res, queryStr) {
 	const base = '//kitsu.io/api/edge/anime';
 	const url = queryStr.length > 0 ? `${base}?filter[text]=${queryStr}` : base;
 
@@ -40,17 +40,17 @@ export function fetchNovels(res, queryStr) {
 			}
 			return res.json();
 		})
-		.then((novel) => {
-			res.json(novel);
+		.then((anime) => {
+			res.json(anime);
 		})
 		.catch((err) => {
 			console.error(err);
 		});
 }
 
-// Find Novel
-export async function findNovelById(res, id) {
-	Novel.findById(id, (err, result) => {
+// Find Anime
+export async function findAnimeById(res, id) {
+	Anime.findById(id, (err, result) => {
 		if (err) {
 			console.log(err);
 		} else {
@@ -60,20 +60,20 @@ export async function findNovelById(res, id) {
 	});
 }
 
-// List All Novels
-export async function listNovels(res) {
-	Novel.find({}, (err, result) => {
+// List All Animes
+export async function listAnimes(res) {
+	Anime.find({}, (err, result) => {
 		if (err) {
 			console.log(err);
 		} else {
-			console.log('displayed novels');
+			console.log('displayed animes');
 			res.json(result);
 		}
 	});
 }
 
-// Update Novel
-export async function updateNovelById(res, id) {
+// Update Anime
+export async function updateAnimeById(res, id) {
 	const newValues = {
 		title: res.query.title,
 		score: res.query.score,
@@ -81,15 +81,15 @@ export async function updateNovelById(res, id) {
 		tags: res.query.tags,
 	};
 
-	Novel.findByIdAndUpdate(id, newValues, (err, novel) => {
+	Anime.findByIdAndUpdate(id, newValues, (err, anime) => {
 		console.log(id);
 		console.log(`new values: \n${newValues}`);
 
 		if (err) {
 			console.log(err);
 		} else {
-			res.json(novel);
-			console.log(`Updated novel: ${novel}`);
+			res.json(anime);
+			console.log(`Updated anime: ${anime}`);
 		}
 	});
 }

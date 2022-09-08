@@ -1,4 +1,4 @@
-import Novel from '../novels/novel.model.js';
+import Anime from '../animes/anime.model.js';
 import { connectDB, dropDB, dropCollections } from './db-handler.js';
 
 beforeAll(async () => {
@@ -13,29 +13,29 @@ afterEach(async () => {
 	await dropCollections();
 });
 
-describe('Novel Model', () => {
-	let validNovel = {
+describe('Anime Model', () => {
+	let validAnime = {
 		title: 'Sword Art Online',
 		score: 10,
 		progress: 'Finished',
 		tags: ['SAO', 'Fantasy', 'Sci-Fi'],
 	};
 
-	it('creates a novel item successfully', async () => {
-		const newNovel = await Novel(validNovel);
-		await newNovel.save();
-		expect(newNovel._id).toBeDefined();
-		expect(newNovel.title).toBe(validNovel.title);
-		expect(newNovel.score).toBe(validNovel.score);
-		expect(newNovel.progress).toBe(validNovel.progress);
-		expect(JSON.stringify(newNovel.tags)).toBe(JSON.stringify(validNovel.tags));
+	it('creates an anime item successfully', async () => {
+		const newAnime = await Anime(validAnime);
+		await newAnime.save();
+		expect(newAnime._id).toBeDefined();
+		expect(newAnime.title).toBe(validAnime.title);
+		expect(newAnime.score).toBe(validAnime.score);
+		expect(newAnime.progress).toBe(validAnime.progress);
+		expect(JSON.stringify(newAnime.tags)).toBe(JSON.stringify(validAnime.tags));
 	});
 
-	it('deletes a novel successfully', async () => {
-		const newNovel = await Novel(validNovel);
-		expect(newNovel._id).toBeDefined();
-		expect(Novel.findById(newNovel._id)).toBeDefined();
-		Novel.findByIdAndDelete(newNovel._id);
-		expect(Novel.findById(newNovel._id)._id).toBeUndefined();
+	it('deletes an anime successfully', async () => {
+		const newAnime = await Anime(validAnime);
+		expect(newAnime._id).toBeDefined();
+		expect(Anime.findById(newAnime._id)).toBeDefined();
+		Anime.findByIdAndDelete(newAnime._id);
+		expect(Anime.findById(newAnime._id)._id).toBeUndefined();
 	});
 });

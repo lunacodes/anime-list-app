@@ -79,22 +79,22 @@ async function getRefreshTokens(userId) {
 	return refreshTokens;
 }
 
-async function addNovelToUser(res, user, novelToAdd) {
-	// TODO: Replace back & forth assignment btwn userNovels and user.novels
-	// let userNovels = user.novels;
-	// console.log('Novel to Add:\n', novelToAdd);
-	const titles = user.novels.map((novel) => {
-		return novel.title;
+async function addAnimeToUser(res, user, animeToAdd) {
+	// FIXME: Is it better to reassign, or allow mutation here?
+	// let userAnimes = user.animes;
+	// console.log('Anime to Add:\n', animeToAdd);
+	const titles = user.animes.map((anime) => {
+		return anime.title;
 	});
 	// console.log('titles:\n', titles, '\n');
-	if (titles.includes(novelToAdd.title)) {
-		console.error("Novel is already in user's library");
-		return res.send("Novel is already in user's library");
+	if (titles.includes(animeToAdd.title)) {
+		console.error("Anime is already in user's library");
+		return res.send("Anime is already in user's library");
 	} else {
-		user.novels.push(novelToAdd);
-		user.novels.sort();
+		user.animes.push(animeToAdd);
+		user.animes.sort();
 
-		// user.novels = userNovels;
+		// user.animes = userAnimes;
 		await user.save((err, user) => {
 			if (err) {
 				console.error(`Error 1: \n${err}`);
@@ -107,22 +107,22 @@ async function addNovelToUser(res, user, novelToAdd) {
 	}
 }
 
-async function removeNovelFromUser(res, user, novelToRemove) {
-	let userNovels = user.novels;
+async function removeAnimeFromUser(res, user, animeToRemove) {
+	let userAnimes = user.animes;
 
-	console.log(novelToRemove);
-	console.log(userNovels);
-	if (!userNovels.includes(novelToRemove)) {
-		console.error("Novel not in user's library");
-		return res.send("Novel not in user's library");
+	console.log(animeToRemove);
+	console.log(userAnimes);
+	if (!userAnimes.includes(animeToRemove)) {
+		console.error("Anime not in user's library");
+		return res.send("Anime not in user's library");
 	} else {
-		userNovels = userNovels
+		userAnimes = userAnimes
 			.filter((val) => {
-				return val !== novelToRemove;
+				return val !== animeToRemove;
 			})
 			.sort();
 
-		user.novels = userNovels;
+		user.animes = userAnimes;
 		await user.save((err, user) => {
 			if (err) {
 				console.log(`Error 1: \n${err}`);
@@ -135,8 +135,8 @@ async function removeNovelFromUser(res, user, novelToRemove) {
 	}
 }
 
-async function updateUserNovels(res, id, newValues, action = '', next) {
-	console.log('updateUserNovels ran');
+async function updateUserAnimes(res, id, newValues, action = '', next) {
+	console.log('updateUserAnimes ran');
 	const user = await getUser(id)
 		.then((user, err) => {
 			if (err) {
@@ -146,10 +146,10 @@ async function updateUserNovels(res, id, newValues, action = '', next) {
 
 			switch (action) {
 				case 'add':
-					addNovelToUser(res, user, newValues.novel);
+					addAnimeToUser(res, user, newValues.anime);
 					break;
 				case 'remove':
-					removeNovelFromUser(res, user, newValues.novel);
+					removeAnimeFromUser(res, user, newValues.anime);
 					break;
 				default:
 					db.User.findByIdAndUpdate(id, newValues, (err, user) => {
@@ -176,7 +176,7 @@ async function registerUser({ firstName, lastName, username, password }, res) {
 		lastName: lastName,
 		username: username,
 		passwordHash: bcrypt.hashSync(`${password}`, 10),
-		novels: [],
+		animes: [],
 		role: Roles.User,
 	});
 	await user.save((err, user) => {
@@ -225,8 +225,8 @@ function randomTokenString() {
 }
 
 function basicDetails(user) {
-	const { id, firstName, lastName, username, role, novels } = user;
-	return { id, firstName, lastName, username, role, novels };
+	const { id, firstName, lastName, username, role, animes } = user;
+	return { id, firstName, lastName, username, role, animes };
 }
 
 const userService = {
@@ -237,7 +237,7 @@ const userService = {
 	getAllUsers,
 	getById,
 	getRefreshTokens,
-	updateUserNovels,
+	updateUserAnimes,
 };
 
 export default userService;

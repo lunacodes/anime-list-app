@@ -23,9 +23,11 @@ UserRouter.post('/users/add-anime', addAnimeToUser);
 UserRouter.post('/users/remove-anime', removeAnimeFromUser);
 
 // TODO: 9/6/22 - Re-add user authorize() checks
-UserRouter.get('/users', authorize(Role.Admin), getAll);
+// UserRouter.get('/users', authorize(Role.Admin), getAll);
+// UserRouter.get('/users', getAll);
 UserRouter.get('/users/all', getAll);
 UserRouter.get('/users/:id', getById);
+UserRouter.get('/users/getbyid', getById);
 UserRouter.get('/users/:id/refresh-tokens', authorize(), getRefreshTokens);
 
 async function addAnimeToUser(req, res, next) {
@@ -141,11 +143,14 @@ function getAll(req, res, next) {
 
 function getById(req, res, next) {
 	// regular users can get their own record and admins can get any record
-	if (req.params.id !== req.user.id && req.user.role !== Role.Admin) {
-		return res.status(401).json({ message: 'Unauthorized' });
-	}
-
-	const userId = req.params.id !== undefined ? req.params.id : req.body.id;
+	// FIXME: This is broken, as far as postman goes. Needs re-implementation
+	// if (req.params.id !== req.user.id && req.user.role !== Role.Admin) {
+	// 	return res.status(401).json({ message: 'Unauthorized' });
+	// }
+	// console.log(req.params);
+	// console.log(req.body);
+	// const userId = req.params.id !== undefined ? req.params.id : req.body.id;
+	const userId = req.body.id;
 
 	userService
 		.getById(userId)

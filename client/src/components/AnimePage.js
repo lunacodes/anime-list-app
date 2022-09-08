@@ -1,14 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import getCurrentDate from '../services/dateService.js';
 import stringToSlug from '../services/stringToSlug.js';
+import AuthService from '../services/authService.js';
+const API_URL = process.env.REACT_APP_API_ENDPOINT;
 
 const AnimePage = ({ animes }) => {
 	const params = useParams();
 
+	const AddAnimeToUser = (animes) => {
+		const today = getCurrentDate;
+		const currentUser = AuthService.getCurrentUser();
+
+		if (!currentUser) {
+			window.alert('You need to login');
+			console.log('No user logged in');
+			return;
+		}
+
+		animes.map((anime) => {
+			if (stringToSlug(anime.title) == params.animeSlug) {
+				return axios.post(`${API_URL}/users/add-anime`, {
+					id: currentUser.id,
+					title: anime.title,
+					thumb: anime.poster,
+					episodes: anime.episodes,
+					status: anime.status || 'plan to watch',
+					eps_watched: anime.progress || 0,
+					date_added: today,
+					episodeCount: anime.episodeCount,
+				});
+			}
+		});
+	};
+
 	const AnimeDisplay = () =>
 		animes.map((item, index) => {
-			if (stringToSlug(item.title) == params.animeSlug) {
+			if (stringToSlug(item.title) === params.animeSlug) {
 				const id = `${index}-${item.title}`;
 				const title = item.title;
 				const poster = item.poster;
@@ -30,7 +60,10 @@ const AnimePage = ({ animes }) => {
 								height='400'
 							/>
 							<div className='anime-actions'>
-								<Link to='/'>Add to My List</Link>
+								{/* TODO: Add state check for "Already on list" */}
+								<button onClick={() => AddAnimeToUser(animes)}>
+									Add to My List
+								</button>
 							</div>
 						</div>
 						<div className='anime-single--right'>

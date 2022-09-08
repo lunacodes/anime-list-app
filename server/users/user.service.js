@@ -80,13 +80,10 @@ async function getRefreshTokens(userId) {
 }
 
 async function addAnimeToUser(res, user, animeToAdd) {
-	// FIXME: Is it better to reassign, or allow mutation here?
-	// let userAnimes = user.animes;
-	// console.log('Anime to Add:\n', animeToAdd);
 	const titles = user.animes.map((anime) => {
 		return anime.title;
 	});
-	// console.log('titles:\n', titles, '\n');
+
 	if (titles.includes(animeToAdd.title)) {
 		console.error("Anime is already in user's library");
 		return res.send("Anime is already in user's library");
@@ -94,7 +91,6 @@ async function addAnimeToUser(res, user, animeToAdd) {
 		user.animes.push(animeToAdd);
 		user.animes.sort();
 
-		// user.animes = userAnimes;
 		await user.save((err, user) => {
 			if (err) {
 				console.error(`Error 1: \n${err}`);

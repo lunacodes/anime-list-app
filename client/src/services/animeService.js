@@ -33,6 +33,7 @@ const getAnimesRequest = async (animesQueryStr) => {
 			status: anime.status,
 			tba: anime.tba,
 			totalLength: anime.totalLength,
+			episodeCount: anime.episodeCount,
 		};
 
 		animes_data.push(n_dat);

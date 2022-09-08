@@ -1,10 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import AuthService from '../services/authService';
-import Gallery from './Gallery';
+// import Gallery from './Gallery';
 
-const Profile = ({ novels }) => {
+// const Profile = ({ novels }) => {
+const Profile = () => {
 	const currentUser = AuthService.getCurrentUser();
+	const filteredNovels = currentUser.novels.filter((novel) => {
+		return typeof novel === 'object' && novel.title;
+	});
+	// console.log(filteredNovels);
 
 	return (
 		<>
@@ -49,7 +54,24 @@ const Profile = ({ novels }) => {
 					<h2 className='user-novels--heading'>
 						{currentUser.username}'s Light Novels:
 					</h2>
-					<Gallery novels={novels} />
+					{filteredNovels &&
+						filteredNovels.map((novel) => (
+							<>
+								<div className='user-novels' key={novel.title}>
+									<h3>{novel.title}</h3>
+									<p>
+										<strong>Date Added</strong>: {novel.dateAdded}
+									</p>
+									<p>
+										<strong>Pages</strong>: {novel.pages}
+									</p>
+									<p>
+										<strong>Progress</strong>: {novel.progress}
+									</p>
+								</div>
+							</>
+						))}
+					{/* <Gallery novels={novels} /> */}
 				</div>
 			</div>
 		</>

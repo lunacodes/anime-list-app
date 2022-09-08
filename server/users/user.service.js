@@ -80,19 +80,24 @@ async function getRefreshTokens(userId) {
 }
 
 async function addNovelToUser(res, user, novelToAdd) {
-	let userNovels = user.novels;
-
-	if (userNovels.includes(novelToAdd)) {
+	// TODO: Replace back & forth assignment btwn userNovels and user.novels
+	// let userNovels = user.novels;
+	// console.log('Novel to Add:\n', novelToAdd);
+	const titles = user.novels.map((novel) => {
+		return novel.title;
+	});
+	// console.log('titles:\n', titles, '\n');
+	if (titles.includes(novelToAdd.title)) {
 		console.error("Novel is already in user's library");
 		return res.send("Novel is already in user's library");
 	} else {
-		userNovels.push(novelToAdd);
-		userNovels.sort();
+		user.novels.push(novelToAdd);
+		user.novels.sort();
 
-		user.novels = userNovels;
+		// user.novels = userNovels;
 		await user.save((err, user) => {
 			if (err) {
-				console.log(`Error 1: \n${err}`);
+				console.error(`Error 1: \n${err}`);
 				return res.send(`Error: \n${err}`);
 			}
 			console.log('Add - user.save ran:', user);

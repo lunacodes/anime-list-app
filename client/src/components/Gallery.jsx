@@ -10,7 +10,7 @@ const Gallery = ({ novels }) => {
   const NovelsDisplay = () => {
     if (novel_data.length > 0) {
       return novel_data.map((item, index) => {
-        const id = `${index}-${item.title}`;
+        const id = `${item.title}-${index}`;
         const title = item.title;
         const poster = item.poster;
         const slug = stringToSlug(title);

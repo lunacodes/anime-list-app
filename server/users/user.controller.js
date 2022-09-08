@@ -30,15 +30,30 @@ UserRouter.get('/users/:id/refresh-tokens', authorize(), getRefreshTokens);
 
 async function addNovelToUser(req, res, next) {
 	const userId = req.body.id;
-	const novel = req.body.novel;
+	const titleStr = req.body.title;
+	const totalPages = req.body.pages;
+	// const thumb = req.body.thumb;
+	const progress = req.body.progress;
+	const dateAdded = req.body.date_added;
 
-	if (!novel.length > 0) {
+	const novelObj = {
+		title: titleStr,
+		pages: totalPages,
+		progress: progress,
+		dateAdded: dateAdded,
+	};
+
+	// console.log(novelObj);
+
+	const isEmpty = Object.keys(novelObj).length === 0;
+
+	if (isEmpty) {
 		return res.json(
-			'Received empty string. Please specificy a novel title to add'
+			'Received empty object. Please specificy a novel title to add'
 		);
 	}
 
-	userService.updateUserNovels(res, userId, { novel: novel }, 'add', next);
+	userService.updateUserNovels(res, userId, { novel: novelObj }, 'add', next);
 }
 
 async function removeNovelFromUser(req, res, next) {

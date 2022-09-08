@@ -1,3 +1,3 @@
-# My Light Novels Client
+# Anime List Client
 
-Created with `create-react-app` . See main README.md in root directory.
+Created with `create-react-app` . See main [README.md](../README.md) in root directory.

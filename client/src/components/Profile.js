@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import AuthService from '../services/authService';
 // import Gallery from './Gallery';
 
-// const Profile = ({ novels }) => {
+// const Profile = ({ animes }) => {
 const Profile = () => {
 	const currentUser = AuthService.getCurrentUser();
-	const filteredNovels = currentUser.novels.filter((novel) => {
-		return typeof novel === 'object' && novel.title;
+	const filteredAnimes = currentUser.animes.filter((anime) => {
+		return typeof anime === 'object' && anime.title;
 	});
-	// console.log(filteredNovels);
+	// console.log(filteredAnimes);
 
 	return (
 		<>
@@ -51,27 +51,27 @@ const Profile = () => {
 						pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
 						culpa qui officia deserunt mollit anim id est laborum.
 					</p>
-					<h2 className='user-novels--heading'>
-						{currentUser.username}'s Light Novels:
+					<h2 className='user-animes--heading'>
+						{currentUser.username}'s Animes:
 					</h2>
-					{filteredNovels &&
-						filteredNovels.map((novel) => (
+					{filteredAnimes &&
+						filteredAnimes.map((anime) => (
 							<>
-								<div className='user-novels' key={novel.title}>
-									<h3>{novel.title}</h3>
+								<div className='user-animes' key={anime.title}>
+									<h3>{anime.title}</h3>
 									<p>
-										<strong>Date Added</strong>: {novel.dateAdded}
+										<strong>Date Added</strong>: {anime.dateAdded}
 									</p>
 									<p>
-										<strong>Pages</strong>: {novel.pages}
+										<strong>Pages</strong>: {anime.pages}
 									</p>
 									<p>
-										<strong>Progress</strong>: {novel.progress}
+										<strong>Progress</strong>: {anime.progress}
 									</p>
 								</div>
 							</>
 						))}
-					{/* <Gallery novels={novels} /> */}
+					{/* <Gallery animes={animes} /> */}
 				</div>
 			</div>
 		</>
@@ -79,7 +79,7 @@ const Profile = () => {
 };
 
 Profile.propTypes = {
-	novels: PropTypes.array,
+	animes: PropTypes.array,
 };
 
 export default Profile;

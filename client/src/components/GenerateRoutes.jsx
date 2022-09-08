@@ -4,29 +4,29 @@ import { Routes, Route } from 'react-router-dom';
 import Home from './Home';
 import Profile from './Profile';
 import Login from './Login';
-import NovelPage from './NovelPage';
+import AnimePage from './AnimePage';
 import PageNotFound from './PageNotFound';
 import Register from './Register';
 import BoardUser from './BoardUser';
 
-const GenerateRoutes = ({ novelsData }) => {
-  const novel_data = novelsData;
-  const novels_arr = [];
+const GenerateRoutes = ({ animesData }) => {
+  const anime_data = animesData;
+  const animes_arr = [];
 
-  novel_data.map((novel) => {
-    novels_arr.push(Object.values(novel));
+  anime_data.map((anime) => {
+    animes_arr.push(Object.values(anime));
   });
 
   return (
     <>
       <Routes>
         <Route path='*' element={<PageNotFound />} />
-        <Route exact path={'/'} element={<Home novels={novelsData} />} />
-        <Route path='novels'>
-          <Route index element={<Home novels={novelsData} />} />
+        <Route exact path={'/'} element={<Home animes={animesData} />} />
+        <Route path='animes'>
+          <Route index element={<Home animes={animesData} />} />
           <Route
-            path=':novelSlug'
-            element={<NovelPage novels={novelsData} />}
+            path=':animeSlug'
+            element={<AnimePage animes={animesData} />}
           />
         </Route>
         <Route exact path='/login' element={<Login />} />
@@ -34,7 +34,7 @@ const GenerateRoutes = ({ novelsData }) => {
         <Route
           exact
           path='/profile'
-          element={<Profile novels={novelsData} />}
+          element={<Profile animes={animesData} />}
         />
         <Route path='/user' element={<BoardUser />} />
       </Routes>
@@ -43,7 +43,7 @@ const GenerateRoutes = ({ novelsData }) => {
 };
 
 GenerateRoutes.propTypes = {
-  novelsData: PropTypes.array,
+  animesData: PropTypes.array,
 };
 
 export default GenerateRoutes;

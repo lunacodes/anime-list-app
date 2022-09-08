@@ -3,7 +3,7 @@ import axios from 'axios';
 const API_URL = process.env.REACT_APP_API_ENDPOINT;
 const getPublicContent = () => {
 	// return axios.get(API_URL + 'all');
-	return axios.get(`${API_URL}/novels/fetch`);
+	return axios.get(`${API_URL}/animes/fetch`);
 };
 
 const getUserBoard = () => {

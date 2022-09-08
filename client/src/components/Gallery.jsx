@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import stringToSlug from '../services/stringToSlug.js';
 import { Link } from 'react-router-dom';
 
-const Gallery = ({ novels }) => {
-  const novel_data = novels;
+const Gallery = ({ animes }) => {
+  const anime_data = animes;
 
-  const NovelsDisplay = () => {
-    if (novel_data.length > 0) {
-      return novel_data.map((item, index) => {
+  const AnimesDisplay = () => {
+    if (anime_data.length > 0) {
+      return anime_data.map((item, index) => {
         const id = `${item.title}-${index}`;
         const title = item.title;
         const poster = item.poster;
@@ -17,7 +17,7 @@ const Gallery = ({ novels }) => {
 
         return (
           <div key={id} className='gallery-item'>
-            <Link to={`/novels/${slug}`}>
+            <Link to={`/animes/${slug}`}>
               <img
                 src={poster}
                 alt={title}
@@ -32,20 +32,20 @@ const Gallery = ({ novels }) => {
       });
     }
 
-    return <div>There are no novels that match that search</div>;
+    return <div>There are no animes that match that search</div>;
   };
 
   return (
     <>
       <div className='gallery'>
-        <NovelsDisplay />
+        <AnimesDisplay />
       </div>
     </>
   );
 };
 
 Gallery.propTypes = {
-  novels: PropTypes.array,
+  animes: PropTypes.array,
 };
 
 export default Gallery;

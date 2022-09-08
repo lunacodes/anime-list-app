@@ -1,4 +1,4 @@
-.novel-single {
+.anime-single {
   display: flex;
   flex-wrap: wrap;
 
@@ -20,19 +20,19 @@
   }
 }
 
-.novel-img {
+.anime-img {
   margin: 0 0 0.5rem;
 }
 
-.novel-actions {
+.anime-actions {
   a {
     color: darken($link-color--hover, 10%);
   }
 }
 
-.novel-accent-row {
+.anime-accent-row {
   background: $background-accent--lighter;
-  color: $novel--top-row__color;
+  color: $anime--top-row__color;
   display: flex;
   gap: 0 40px;
   margin: 0 0 1rem;
@@ -51,6 +51,6 @@
   font-size: 1rem;
 }
 
-.novel-synopsis {
+.anime-synopsis {
   width: 100%;
 }

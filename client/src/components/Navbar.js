@@ -7,7 +7,7 @@ const Navbar = ({ currentUser, logOut }) => {
 		<>
 			<nav className='navbar navbar-expand navbar-dark bg-dark site-nav'>
 				<NavLink to={'/'} className='navbar-brand'>
-					My Light Novels
+					Anime List
 				</NavLink>
 				<div className='navbar-nav mr-auto'>
 					<li className='nav-item'>

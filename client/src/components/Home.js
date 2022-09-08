@@ -2,23 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Gallery from './Gallery';
 
-const Home = ({ novels }) => {
-	const novel_data = novels;
-	const novels_arr = [];
+const Home = ({ animes }) => {
+	const anime_data = animes;
+	const animes_arr = [];
 
-	novel_data.map((novel) => {
-		novels_arr.push(Object.values(novel));
+	anime_data.map((anime) => {
+		animes_arr.push(Object.values(anime));
 	});
 
 	return (
 		<div className='container-fluid'>
-			<Gallery novels={novel_data} />
+			<Gallery animes={anime_data} />
 		</div>
 	);
 };
 
 Home.propTypes = {
-	novels: PropTypes.array,
+	animes: PropTypes.array,
 };
 
 export default Home;

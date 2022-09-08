@@ -4,7 +4,7 @@ import debounce from 'lodash.debounce';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.scss';
 import AuthService from './services/authService';
-import getNovelsRequest from './services/novelService';
+import getAnimesRequest from './services/animeService';
 import Navbar from './components/Navbar';
 import SearchBar from './components/SearchBar';
 import GenerateRoutes from './components/GenerateRoutes';
@@ -12,18 +12,18 @@ import EventBus from './common/EventBus';
 
 const App = () => {
 	const [currentUser, setCurrentUser] = useState(undefined);
-	const [novelsQueryStr, setNovelsQueryStr] = useState('');
-	const [novelsData, setNovelsData] = useState();
+	const [animesQueryStr, setAnimesQueryStr] = useState('');
+	const [animesData, setAnimesData] = useState();
 	const [isLoading, setIsLoading] = useState(true);
 
 	// Search Bar Functions & Effects
 	const changeHandler = (event) => {
-		setNovelsQueryStr(event.target.value);
+		setAnimesQueryStr(event.target.value);
 	};
 
 	const debouncedChangeHandler = useMemo(
 		() => debounce(changeHandler, 300),
-		[novelsQueryStr]
+		[animesQueryStr]
 	);
 	// Stop the invocation of the debounced function
 	// after unmounting
@@ -33,16 +33,16 @@ const App = () => {
 		};
 	}, []);
 
-	// Novel Data Effect
+	// Anime Data Effect
 	useEffect(() => {
-		async function fetchNovelData() {
-			const data = await getNovelsRequest(novelsQueryStr);
-			const novel_data = await Object.values(data);
-			await setNovelsData(novel_data);
+		async function fetchAnimeData() {
+			const data = await getAnimesRequest(animesQueryStr);
+			const anime_data = await Object.values(data);
+			await setAnimesData(anime_data);
 			setIsLoading(false);
 		}
-		fetchNovelData();
-	}, [novelsQueryStr]);
+		fetchAnimeData();
+	}, [animesQueryStr]);
 
 	// User Auth function & Effects
 	useEffect(() => {
@@ -75,7 +75,7 @@ const App = () => {
 					<main id='site-main' className='site-main'>
 						<SearchBar onChangeText={debouncedChangeHandler} />
 						<GenerateRoutes
-							novelsData={novelsData}
+							animesData={animesData}
 							currentUser={currentUser}
 							logOut={logOut}
 						/>

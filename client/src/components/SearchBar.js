@@ -7,7 +7,7 @@ const SearchBar = ({ onChangeText }) => {
 			<input
 				type='text'
 				onChange={onChangeText}
-				placeholder='Search light novels by name'
+				placeholder='Search anime by name'
 			/>
 		</div>
 	);

@@ -75,3 +75,59 @@
   border: 1px solid black;
   margin-bottom: 1rem;
 }
+
+.user-animes-table {
+  max-width: 100%;
+  white-space: normal;
+  width: 100%;
+  word-break: break-word;
+
+  h3 {
+    margin: 0;
+    padding: 0;
+  }
+
+  tr,
+  td,
+  th {
+    border: 1px solid $anime--top-row__color;
+  }
+
+  th,
+  td {
+    &:nth-of-type(2) {
+      width: 40%;
+    }
+  }
+
+  th {
+    padding: 0 10px;
+  }
+
+  td {
+    max-width: min-content;
+    // padding: 2px 10px;
+    padding: 4px 7px;
+
+    &:first-of-type {
+      box-sizing: content-box;
+      max-width: initial;
+      padding: 4px 7px;
+      width: 53px;
+    }
+
+    &:nth-of-type(2) {
+      max-width: initial;
+      min-width: 50%;
+      padding: 4px 10px;
+      width: auto;
+    }
+  }
+
+  img {
+    height: 68px;
+    object-fit: cover;
+    object-position: top;
+    width: 48px;
+  }
+}

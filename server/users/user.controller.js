@@ -37,6 +37,7 @@ async function addAnimeToUser(req, res, next) {
 		thumb: req.body.thumb,
 		episodes: req.body.episodes,
 		status: req.body.status || 'plan to watch',
+		rating: '',
 		eps_watched: req.body.progress,
 		date_added: req.body.date_added,
 	};

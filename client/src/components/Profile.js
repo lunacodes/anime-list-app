@@ -51,27 +51,41 @@ const Profile = () => {
 						pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
 						culpa qui officia deserunt mollit anim id est laborum.
 					</p>
-					<h2 className='user-animes--heading'>
+					<h2 className='user-animes-heading'>
 						{currentUser.username}'s Animes:
 					</h2>
-					{filteredAnimes &&
-						filteredAnimes.map((anime) => (
-							<>
-								<div className='user-animes' key={anime.title}>
-									<h3>{anime.title}</h3>
-									<p>
-										<strong>Date Added</strong>: {anime.dateAdded}
-									</p>
-									<p>
-										<strong>Pages</strong>: {anime.pages}
-									</p>
-									<p>
-										<strong>Progress</strong>: {anime.progress}
-									</p>
-								</div>
-							</>
-						))}
-					{/* <Gallery animes={animes} /> */}
+					<table className='user-animes-table'>
+						<thead>
+							<tr>
+								<th>Image</th>
+								<th>Title</th>
+								<th>Rating</th>
+								<th>Progress</th>
+								<th>Date Added</th>
+							</tr>
+						</thead>
+
+						<tbody>
+							{filteredAnimes &&
+								filteredAnimes.map((anime) => (
+									<>
+										<tr className='user-animes-row' key={anime.title}>
+											<td key={anime.title}>
+												<img src={anime.thumb} alt={anime.title} />
+											</td>
+											<td>
+												<h3 key={anime.title}>{anime.title}</h3>
+											</td>
+											<td>{anime.rating || ' '}</td>
+											<td>
+												{anime.eps_watched || 0} / {anime.episodes}
+											</td>
+											<td>{anime.date_added}</td>
+										</tr>
+									</>
+								))}
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</>

@@ -8,7 +8,6 @@ const schema = new Schema({
 	email: { type: String, unique: false, required: false },
 	passwordHash: { type: String, required: true },
 	role: { type: String, required: false },
-	// TODO: Specify Type of animes as array of objects
 	animes: { type: Array, unique: false, required: false },
 });
 

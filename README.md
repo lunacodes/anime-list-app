@@ -1,12 +1,12 @@
 # Anime List App
 
-This app is an in-progress exercise, in order for me to further my React, Node, and MongoDB knowledge. I plan to implement Typescript later on, as well.
+An app to keep track of anime one has watched, or plans to watched. Inspired by [MyAnimeList](myanimelist.net/).
 
 Demo: [My Light Novels (Heroku App)](https://my-light-anime.herokuapp.com/)
 
 ## Running the App
 
-You'll need to have a MongoDB and Atlas URI set up. See [MongoDB - MERN Stack Tutorial](https://www.mongodb.com/languages/mern-stack-tutorial) and [MongoDB - Get Started With Atlas](https://docs.atlas.mongodb.com/getting-started/)
+You'll need to have a MongoDB and Atlas URI (or local version) set up. See [MongoDB - MERN Stack Tutorial](https://www.mongodb.com/languages/mern-stack-tutorial) and [MongoDB - Get Started With Atlas](https://docs.atlas.mongodb.com/getting-started/)
 
 **Running the App**
 
@@ -29,26 +29,27 @@ The current tech stack for this app is as follows:
 
 ## To-Do
 
-Add documentation with Swagger
+- Add documentation with Swagger
 
 ### Client
 
-- Write tests
-- Set Logout redirect to go the previous page, via React Router
-- Tidy up messages and redirects for user login & registration
-- Add ability for user to add anime to their profile
-- Only display search bar on specific pages
-- Add custom page class to `<body>` or `main` tag
-- Fix: storing user info in local storage causes anime list not to reflect updates. Need to make fetch to db on User profile page
+- Add tests
+- Set Logout redirect to go the previous page, instead of displaying login form
+- Tidy up login behavior, via Context, Memo, and Router
+- Only display search bar on relevant
+- Add page-specific utility class to `<body>` or `main` tag
+- Fix: User's anime list not updating after adding or deleting an anime.
+  - Reason: User data in local storage is only refreshed after login/logout
 
 ### Server
 
-- Add ability for user to modify user details
+- Add routes & functions for modifying user details
 - Tests needed for:
-  - Anime add, update, and delete
-- Sort anime before entry in DB: https://stackoverflow.com/questions/1069666/sorting-object-property-by-values (alternately, sort them client-side)
+  - User Anime: add, update, and delete
+  - User Details: add, edit
+- Sort user's anime array after add/delete, prior to sending them back to the Database
 
 ## Future Implementation
 
 - Convert to TypeScript
-  -Use Redis for auth: https://javascript.plainenglish.io/how-redis-can-make-authentication-10x-easoer-for-your-users-cd8c0601d38
+- Optional: Use Redis for auth: https://javascript.plainenglish.io/how-redis-can-make-authentication-10x-easoer-for-your-users-cd8c0601d38

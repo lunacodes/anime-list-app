@@ -47,6 +47,16 @@ app.use(UserRouter);
 app.use('/animes', animeRouter);
 app.use(errorHandler);
 
+app.use((req, res, next) => {
+	if (process.env.NODE_ENV === 'production') {
+		if (req.headers.host === `${process.env.REACT_APP_API_ENDPOINT}`)
+			return res.redirect(301, `https://${process.env.REACT_APP_API_ENDPOINT}`);
+		if (req.headers['x-forwarded-proto'] !== 'https')
+			return res.redirect('https://' + req.headers.host + req.url);
+		else return next();
+	} else return next();
+});
+
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 app.get('*', (req, res) => {
 	res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));

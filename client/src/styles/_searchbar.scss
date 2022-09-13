@@ -3,6 +3,12 @@
   justify-content: center;
   padding: 0 24px;
   width: 266px;
+
+  input[type='text'] {
+    margin-bottom: 1rem;
+    padding: 4px 10px;
+    width: 100%;
+  }
 }
 
 @media (min-width: 768px) {
@@ -17,17 +23,9 @@
     justify-content: flex-end;
     padding: 0 24px;
     width: auto;
-  }
-}
 
-input[type='text'] {
-  margin-bottom: 1rem;
-  padding: 4px 10px;
-  width: 100%;
-}
-
-@media (min-width: 992px) {
-  input[type='text'] {
-    width: auto;
+    input[type='text'] {
+      width: auto;
+    }
   }
 }

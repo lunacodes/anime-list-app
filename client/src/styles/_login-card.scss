@@ -1,13 +1,23 @@
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+.card-container.card {
+  max-width: 350px !important;
+  padding: 20px;
+}
+
 .card {
   background-color: #f7f7f7;
+  // margin-top: 50px;
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
   border-radius: 2px;
   -moz-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
   -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
-  margin: 0 auto 25px;
-  margin-top: 50px;
+  margin: 50px auto 25px;
   padding: 20px 25px 30px;
 }
 
@@ -19,4 +29,8 @@
   height: 96px;
   margin: 0 auto 10px;
   width: 96px;
+}
+
+.btn-mt20 {
+  margin-top: 20px;
 }

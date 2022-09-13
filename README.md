@@ -19,6 +19,10 @@ You'll need to have a MongoDB and Atlas URI (or local version) set up. See [Mong
 
 In the root directory, `npm run build` then `npm start`
 
+## API Docs
+
+API docs are built using Swagger, and can be found at `<root_url>/api-docs` (e.g. http://localhost:8081/api-docs)
+
 ## Tech Stack
 
 The current tech stack for this app is as follows:

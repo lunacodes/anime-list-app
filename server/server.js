@@ -1,6 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+// Docs
+import swaggerUi from 'swagger-ui-express';
+import YAML from 'yamljs';
+const swaggerDocument = YAML.load('./server/swagger.yml');
 // Local File System
 import path from 'path';
 import { dirname } from 'path';
@@ -9,11 +13,9 @@ import { fileURLToPath } from 'url';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import errorHandler from './middleware/error-handler.js';
-import createTestUser from './_helpers/create-test-user.js';
 // Routes
 import animeRouter from './animes/anime.controller.js';
 import UserRouter from './users/user.controller.js';
-createTestUser(); // Deactivate this once I've got the User Model set up properly again
 
 // Environment Variables
 dotenv.config();
@@ -57,6 +59,7 @@ app.use((req, res, next) => {
 	} else return next();
 });
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 app.get('*', (req, res) => {
 	res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
